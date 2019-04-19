@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Hospital Database</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+    <div class="page-header">
+        <h1>Hospital Database</h1>
+    </div>
+
+    <div class="container login-container">
+        <div class="row">
+            <div class="col-md-6 login-form-1">
+                <h3>Employee Login</h3>
+                <form action="auth_em.php" method="POST">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Your Email *" name="uname" value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Your Password *" name="psw" value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btnSubmit" value="Login" />
+                    </div>
+                    <!-- <div class="form-group">
+                        <a href="#" class="ForgetPwd">Forget Password?</a>
+                    </div> -->
+                </form>
+            </div>
+            <div class="col-md-6 login-form-2">
+                <h3>Patient Login</h3>
+                <form action="auth_pat.php" method="POST">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Your Email *" name="uname" value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Your Password *" name="psw" value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btnSubmit" value="Login" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

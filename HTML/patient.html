@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Hospital Database</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
+    <script src="myScript.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="page-header">
+        <h1>Hospital Database</h1>
+    </div>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li class="active" onclick="patient_forms(1)"><a href="#">Personal Information</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
+                            class="glyphicon glyphicon-user"></span> Account <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li onclick="patient_forms(2)"><a href="#">Update Information</a></li>
+                        <li onclick="patient_forms(3)"><a href="#">Change Password</a></li>
+                        <li><a href="login.html">Log Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="pat_details">
+        <form class="form">
+            <div class="form-group-sm">
+                <label for="name">Name of Patient:</label>
+                <input type="text" class="form-control" id="name" name="name" disabled value="">
+            </div>
+            <div class="form-group-sm">
+                <h5><b>Choose your gender:</b></h5>
+                <label class="radio-inline"><input type="radio" name="gender" disabled> Male</label>
+                <label class="radio-inline"><input type="radio" name="gender" disabled> Female</label>
+            </div>
+            <div class="form-group-sm">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" class="form-control" id="dob" name="dob" disabled value="">
+            </div>
+            <div class="form-group-sm">
+                <label for="contact_no">Contact Number:</label>
+                <input type="tel" class="form-control" id="contact_no" name="contact_no" disabled value="">
+            </div>
+            <div class="form-group-sm">
+                <label for="address">Address:</label>
+                <input type="text" class="form-control" id="address" name="address" disabled value="">
+            </div>
+            <div class="form-group-sm">
+                <label for="admit_date">Admit Date:</label>
+                <input type="datetime-local" class="form-control" id="admit_date" name="admit_date" disabled value="">
+            </div>
+            <div class="form-group-sm">
+                <label for="diag">Diagnosis:</label>
+                <input type="number" class="form-control" id="diag" name="diag" disabled value="">
+            </div>
+            <div class="form-group-sm">
+                <label for="discharge_date">Discharge Date:</label>
+                <input type="datetime-local" class="form-control" id="discharge_date" name="discharge_date" disabled
+                    value="">
+            </div>
+        </form>
+    </div>
+
+    <div id="info_form">
+        <form class="form" action="/action_page.php">
+            <div class="form-group-sm">
+                <label for="name">Name of Patient:</label>
+                <input type="text" class="form-control" id="name" name="name" value="" required>
+            </div>
+            <div class="form-group-sm">
+                <h5><b>Choose your gender:</b></h5>
+                <label class="radio-inline"><input type="radio" name="gender"> Male</label>
+                <label class="radio-inline"><input type="radio" name="gender"> Female</label>
+            </div>
+            <div class="form-group-sm">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" class="form-control" id="dob" name="dob" value="" required>
+            </div>
+            <div class="form-group-sm">
+                <label for="contact_no">Contact Number:</label>
+                <input type="tel" class="form-control" id="contact_no" name="contact_no" value="" required>
+            </div>
+            <div class="form-group-sm">
+                <label for="address">Address:</label>
+                <input type="text" class="form-control" id="address" name="address" value="" required>
+            </div>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+
+    <div id="pass_form">
+        <form class="form" action="/action_page.php">
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Current Password" name="curr_psw" value=""
+                    required />
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="New Password" name="new_psw" value=""
+                    required />
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Repeat New Password" name="rep_new_psw"
+                    value="" required />
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>
