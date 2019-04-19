@@ -21,15 +21,15 @@
         <div class="row">
             <div class="col-md-6 login-form-1">
                 <h3>Employee Login</h3>
-                <form action="auth_em.php" method="POST">
+                <form action="/abc/login.php" method="POST">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Your Email *" name="uname" value="" />
+                        <input type="text" class="form-control" placeholder="Employee ID *" name="uname" value="" required />
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Your Password *" name="psw" value="" />
+                        <input type="password" class="form-control" placeholder="Your Password *" name="psw" value="" required/>
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btnSubmit" value="Login" />
+                        <input type="submit" class="btnSubmit" name="submit_emp" value="Login" />
                     </div>
                     <!-- <div class="form-group">
                         <a href="#" class="ForgetPwd">Forget Password?</a>
@@ -38,15 +38,15 @@
             </div>
             <div class="col-md-6 login-form-2">
                 <h3>Patient Login</h3>
-                <form action="auth_pat.php" method="POST">
+                <form action="/abc/login.php" method="POST">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Your Email *" name="uname" value="" />
+                        <input type="text" class="form-control" placeholder="Patient ID *" name="uname" value="" required/>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Your Password *" name="psw" value="" />
+                        <input type="password" class="form-control" placeholder="Your Password *" name="psw" value="" required/>
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btnSubmit" value="Login" />
+                        <input type="submit" class="btnSubmit" name="submit_pat" value="Login" />
                     </div>
                 </form>
             </div>
