@@ -100,8 +100,18 @@ body {
 
 /* end of login */
 
-/* patient page */
+/* patient & doctor page */
 
 #info_form, #pass_form{
   display: none;
 }
+
+/* end of patient & doctor page */
+
+/* update pat info */
+.container{
+  width: 90%;
+  align-self: center;
+}
+
+/* end of update pat info */

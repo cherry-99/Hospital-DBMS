@@ -21,7 +21,7 @@ if(isset($_POST["submit_emp"]))
         $answer=pg_fetch_result($result,0,1);
         if($answer==$pword)
         {
-            header("location: employee.html");
+            header("location: doctor.php");
         }
         else
         {
