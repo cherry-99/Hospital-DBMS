@@ -146,7 +146,7 @@ $address = $answer[8];
     </div>
 
     <div id="info_form">
-        <form class="form" action="/abc/patient.php" method="POST" >
+        <form class="form" action="/Hospital-DBMS/html/patient.php" method="POST" >
             <div class="form-group-sm">
                 <label for="name">Name of Patient:</label>
                 <input type="text" class="form-control" id="name" name="name" value="" required>
@@ -168,7 +168,7 @@ $address = $answer[8];
     </div>
 
     <div id="pass_form">
-        <form class="form" action="/abc/patient.php" method="POST">
+        <form class="form" action="/Hospital-DBMS/html/patient.php" method="POST">
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="Current Password" name="curr_psw" value="" required />
             </div>
