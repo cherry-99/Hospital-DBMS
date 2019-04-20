@@ -146,29 +146,29 @@ $address = $answer[8];
     </div>
 
     <div id="info_form">
-        <form class="form" action="/Hospital-DBMS/html/patient.php" method="POST" >
+        <form class="form" action="/Hospital-DBMS/HTML/patient.php" method="POST" >
             <div class="form-group-sm">
                 <label for="name">Name of Patient:</label>
-                <input type="text" class="form-control" id="name" name="name" value="" required>
+                <input type="text" class="form-control" id="name" name="name" value="<?php echo $name; ?>" required>
             </div>
             <div class="form-group-sm">
                 <label for="dob">Date of Birth:</label>
-                <input type="date" class="form-control" id="dob" name="dob" value="" required>
+                <input type="date" class="form-control" id="dob" name="dob" value="<?php echo $dob; ?>" required>
             </div>
             <div class="form-group-sm">
                 <label for="contact_no">Contact Number:</label>
-                <input type="number" class="form-control" id="contact_no" name="contact_no" value="" required>
+                <input type="number" class="form-control" id="contact_no" name="contact_no" value="<?php echo $ph_no; ?>" required>
             </div>
             <div class="form-group-sm">
                 <label for="address">Address:</label>
-                <input type="text" class="form-control" id="address" name="address" value="" required>
+                <input type="text" class="form-control" id="address" name="address" value="<?php echo $address; ?>" required>
             </div>
             <button type="submit" name="update_info" class="btn btn-default" value="submit">Submit</button>
         </form>
     </div>
 
     <div id="pass_form">
-        <form class="form" action="/Hospital-DBMS/html/patient.php" method="POST">
+        <form class="form" action="/Hospital-DBMS/HTML/patient.php" method="POST">
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="Current Password" name="curr_psw" value="" required />
             </div>
