@@ -1,4 +1,6 @@
 <?php
+unset($_COOKIE['patid']);
+unset($_COOKIE['empid']);
 $host = "host = localhost";
 $port = "port = 5432";
 $dbname = "dbname = test";
@@ -23,6 +25,9 @@ if(isset($_POST["submit_emp"]))
         }
         else
         {
+            $cookiename = "empid";
+            $cookievalue = $uname;
+            setcookie($cookiename, $cookievalue, time() + (86400), "/");
             array_push($errors,"Password does not match Username");
         }
     }
@@ -44,7 +49,10 @@ if(isset($_POST["submit_pat"]))
         $answer=pg_fetch_result($result,0,1);
         if($answer==$pword)
         {
-            header("location: patient.html");
+            $cookiename = "patid";
+            $cookievalue = $uname;
+            setcookie($cookiename, $cookievalue, time() + (86400), "/");
+            header("location: patient.php");
         }
         else
         {
