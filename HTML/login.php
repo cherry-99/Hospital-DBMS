@@ -97,7 +97,7 @@ if(isset($_POST["submit_pat"]))
         <div class="row">
             <div class="col-md-6 login-form-1">
                 <h3>Employee Login</h3>
-                <form action="/Hospital-DBMS/html/login.php" method="POST">
+                <form action="/Hospital-DBMS/HTML/login.php" method="POST">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Employee ID *" name="uname" value="" required />
                     </div>
