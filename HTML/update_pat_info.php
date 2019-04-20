@@ -114,7 +114,7 @@ $address = $answer[8];
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#pat_diag">Diagnosis</a></li>
-            <li><a data-toggle="tab" href="#pat_dis">Dischaarge</a></li>
+            <li><a data-toggle="tab" href="#pat_dis">Discharge</a></li>
         </ul>
 
         <div class="tab-content">
@@ -129,6 +129,11 @@ $address = $answer[8];
                     <div class="form-group-sm">
                         <label for="diag">Diagnosis:</label>
                         <input type="text" class="form-control" id="diag" name="diag" value="<?php echo $diagnosis; ?>"
+                            required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="med_id">Medicine ID:</label>
+                        <input type="number" class="form-control" id="med_id" name="med_id" value="<?php echo $med_id; ?>"
                             required>
                     </div>
                     <button type="submit" name="update_info" class="btn btn-default" value="submit">Submit</button>
