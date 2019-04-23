@@ -10,7 +10,7 @@ CREATE TABLE hospital_employee (
 
 CREATE TABLE employee_login(
 	"emp_id" INTEGER,
-	"password" INTEGER,
+	"password" VARCHAR(15),
 	FOREIGN KEY ("emp_id") REFERENCES hospital_employee("emp_id") ON DELETE CASCADE
 );
 

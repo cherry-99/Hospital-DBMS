@@ -2,62 +2,78 @@
 $host = "host = localhost";
 $port = "port = 5432";
 $dbname = "dbname = test";
-$credentials = "user = postgres password=15739";
+$credentials = "user = postgres password=Chirag@150915";
 
 $db = pg_connect("$host $port $dbname $credentials");
 $errors1 = array();
-$pat_id = $_COOKIE['patid'];
+// $pat_id = $_COOKIE['patid'];
 
+//We dont need the below part. It is for the patient to update his details. But the form is for the doctor to update the patient details
+// if(isset($_POST["update_info"]))
+// {
+//     $name=$_POST["name"];
+//     $contact_no=$_POST["contact_no"];
+//     $dob=$_POST["dob"];
+//     $address=$_POST["address"];
+//     $query = "UPDATE patient SET pat_name='".$name."',address='".$address."',date_of_birth='".$dob."',contact_no='".$contact_no."' WHERE pat_id = $pat_id";
+//     $result = pg_query($db,$query);
+//     header("location: doctor.php");
+// }
+
+//The below part is for patient login verification. Not needed here.
+// if(isset($_POST["update_password"]))
+// {
+//     $curr_psw=$_POST["curr_psw"];
+//     $new_psw=$_POST["new_psw"];
+//     $rep_psw=$_POST["rep_new_psw"];
+//     if($rep_psw!=$new_psw)
+//     {
+//         array_push($errors1,"REPEAT NEW PASSWORD MUST MATCH NEW PASSWORD");
+//     }
+//     $query="SELECT * FROM PATIENT_LOGIN WHERE PAT_ID=$pat_id";
+//     $result=pg_query($db,$query);
+//     $pword=pg_fetch_result($result,0,1);
+//     if($curr_psw!=$pword)
+//     {
+//         array_push($errors1,"Current Password Does Not Match");
+//     }
+//     if(count($errors1)>0)
+//     {
+//         echo '<script type="text/javascript">','patient_forms(3); ','</script>';
+//     }
+//     else
+//     {
+//         $query = "UPDATE patient_login SET pasword='".$new_psw."' WHERE pat_id=$pat_id";
+//         $result = pg_query($db,$query);
+//         header("location: login.html");
+//     }
+// }
+
+//The following is for the doctor to update the patient diagnosis details
 if(isset($_POST["update_info"]))
 {
-    $name=$_POST["name"];
-    $contact_no=$_POST["contact_no"];
-    $dob=$_POST["dob"];
-    $address=$_POST["address"];
-    $query = "UPDATE patient SET pat_name='".$name."',address='".$address."',date_of_birth='".$dob."',contact_no='".$contact_no."' WHERE pat_id = $pat_id";
+    $pat_id = $_POST["pat_id"];
+    $diagnosis=$_POST["diag"];
+    $med_id = $_POST["med_id"];
+    $query = "UPDATE patient SET diagnosis = '".$diagnosis."' WHERE pat_id = $pat_id";
+    $query2 = "UPDATE medication SET med_id = '".$med_id."' WHERE pat_id = $pat_id";
     $result = pg_query($db,$query);
+    $result2 = pg_query($db,$query2);
     header("location: doctor.php");
 }
 
-if(isset($_POST["update_password"]))
-{
-    $curr_psw=$_POST["curr_psw"];
-    $new_psw=$_POST["new_psw"];
-    $rep_psw=$_POST["rep_new_psw"];
-    if($rep_psw!=$new_psw)
-    {
-        array_push($errors1,"REPEAT NEW PASSWORD MUST MATCH NEW PASSWORD");
-    }
-    $query="SELECT * FROM PATIENT_LOGIN WHERE PAT_ID=$pat_id";
-    $result=pg_query($db,$query);
-    $pword=pg_fetch_result($result,0,1);
-    if($curr_psw!=$pword)
-    {
-        array_push($errors1,"Current Password Does Not Match");
-    }
-    if(count($errors1)>0)
-    {
-        echo '<script type="text/javascript">','patient_forms(3); ','</script>';
-    }
-    else
-    {
-        $query = "UPDATE patient_login SET pasword='".$new_psw."' WHERE pat_id=$pat_id";
-        $result = pg_query($db,$query);
-        header("location: login.html");
-    }
-}
-
-$query = "SELECT * FROM patient WHERE pat_id = $pat_id";
-$result = pg_query($db,$query);
-$answer = pg_fetch_array($result);
-$name = $answer[1];
-$gender = $answer[2];
-$dob = $answer[3];
-$ph_no = $answer[4];
-$admit_date = $answer[5];
-$diagnosis = $answer[6];
-$discharge_date = $answer[7];
-$address = $answer[8];
+//Below code is not necessary. We are not displaying the patient details anywhere in the form
+// $query = "SELECT * FROM patient WHERE pat_id = $pat_id";
+// $result = pg_query($db,$query);
+// $answer = pg_fetch_array($result);
+// $name = $answer[1];
+// $gender = $answer[2];
+// $dob = $answer[3];
+// $ph_no = $answer[4];
+// $admit_date = $answer[5];
+// $diagnosis = $answer[6];
+// $discharge_date = $answer[7];
+// $address = $answer[8];
 
 ?>
 
@@ -116,7 +132,7 @@ $address = $answer[8];
             <li class="active"><a data-toggle="tab" href="#pat_diag">Diagnosis</a></li>
             <li><a data-toggle="tab" href="#pat_dis">Discharge</a></li>
         </ul>
-
+<!-- the below form for updating the patient diagnosis -->
         <div class="tab-content">
             <div id="pat_diag" class="tab-pane fade in active">
                 <h3>Diagnosis</h3>
