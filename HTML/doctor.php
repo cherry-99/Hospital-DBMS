@@ -137,7 +137,7 @@ $ph_no = $answer[6];
             </div>
             <div class="form-group-sm">
                 <label for="job_type">Job Type:</label>
-                <input type="text" class="form-control" id="job_type" name="job_type" disabled value="<?php echo $job_type; ?>">
+                <input type="text" class="form-control" id="job_type" name="job_type" disabled value="<?php echo $emp_type; ?>">
             </div>
             <div class="form-group-sm">
                 <label for="house_no">House No:</label>
