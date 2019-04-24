@@ -2,7 +2,7 @@
 $host = "host = localhost";
 $port = "port = 5432";
 $dbname = "dbname = test";
-$credentials = "user = postgres password=Chirag@150915";
+$credentials = "user = postgres password=15739";
 
 $db = pg_connect("$host $port $dbname $credentials");
 $errors1 = array();
@@ -38,7 +38,7 @@ if(isset($_POST["update_password"]))
     }
     $query="UPDATE employee_login SET password = '".$new_psw."' WHERE emp_id = $emp_id";
     $result=pg_query($db,$query);
-    header("location: docotr.php");
+    header("location: doctor.php");
     // $pword=pg_fetch_result($result,0,1);
     // if($curr_psw!=$pword)
     // {
@@ -58,15 +58,15 @@ if(isset($_POST["update_password"]))
 
 //The following code is for retrieving the doctor details and displaying it in the form
 //Remove the address field or add multiple fields so that we can retrieve the same in order from the address cross reference table
-$query = "SELECT employee_name , gender, age, contact_no, emp_type, salary FROM hospital_employee WHERE emp_id = $emp_id";
-$result = pg_query($query,$db);
+$query = "SELECT employee_name , gender, age, emp_type, salary ,contact_no FROM hospital_employee WHERE emp_id = $emp_id";
+$result = pg_query($db,$query);
 $answer = pg_fetch_array($result);
 $name = $answer[1];
 $gender = $answer[2];
 $age = $answer[3];
-$ph_no = $answer[4];
-$emp_type = $answer[5];
-$salary = $answer[6];
+$emp_type = $answer[4];
+$salary = $answer[5];
+$ph_no = $answer[6];
 
 ?>
 
@@ -140,8 +140,20 @@ $salary = $answer[6];
                 <input type="text" class="form-control" id="job_type" name="job_type" disabled value="<?php echo $job_type; ?>">
             </div>
             <div class="form-group-sm">
-                <label for="address">Address:</label>
-                <input type="text" class="form-control" id="address" name="address" disabled value="<?php echo $address; ?>">
+                <label for="house_no">House No:</label>
+                <input type="number" class="form-control" id="house_no" name="house_no" disabled value="<?php echo $house_no; ?>">
+            </div>
+            <div class="form-group-sm">
+                <label for="street">Street:</label>
+                <input type="text" class="form-control" id="street" name="street" disabled value="<?php echo $street; ?>">
+            </div>
+            <div class="form-group-sm">
+                <label for="area">Area:</label>
+                <input type="text" class="form-control" id="area" name="area" disabled value="<?php echo $area; ?>">
+            </div>
+            <div class="form-group-sm">
+                <label for="city">City:</label>
+                <input type="text" class="form-control" id="city" name="city" disabled value="<?php echo $city; ?>">
             </div>
             <div class="form-group-sm">
                 <label for="salary">Salary:</label>
@@ -164,9 +176,21 @@ $salary = $answer[6];
                 <label for="contact_no">Contact Number:</label>
                 <input type="number" class="form-control" id="contact_no" name="contact_no" value="<?php echo $ph_no; ?>" required>
             </div>
+             <div class="form-group-sm">
+                <label for="house_no">House No:</label>
+                <input type="number" class="form-control" id="house_no" name="house_no" value="<?php echo $house_no; ?>" required>
+            </div>
             <div class="form-group-sm">
-                <label for="address">Address:</label>
-                <input type="text" class="form-control" id="address" name="address" value="<?php echo $address; ?>" required>
+                <label for="street">Street:</label>
+                <input type="text" class="form-control" id="street" name="street" value="<?php echo $street; ?>" required>
+            </div>
+            <div class="form-group-sm">
+                <label for="area">Area:</label>
+                <input type="text" class="form-control" id="area" name="area" value="<?php echo $area; ?>" required>
+            </div>
+            <div class="form-group-sm">
+                <label for="city">City:</label>
+                <input type="text" class="form-control" id="city" name="city" value="<?php echo $city; ?>" required>
             </div>
             <button type="submit" name="update_info" class="btn btn-default" value="submit">Submit</button>
         </form>
