@@ -22,12 +22,12 @@ if(isset($_POST["submit_emp"]))
         if($answer==$pword)
         {
             header("location: doctor.php");
-        }
-        else
-        {
             $cookiename = "empid";
             $cookievalue = $uname;
             setcookie($cookiename, $cookievalue, time() + (86400), "/");
+        }
+        else
+        {
             array_push($errors,"Password does not match Username");
         }
     }
