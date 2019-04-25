@@ -127,24 +127,12 @@ if(isset($_POST["update_info"]))
         <?php endforeach ?>
     </div>
     <?php  endif ?>
-    <div class="container">
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#inventory">Inventory</a></li>
-            <li><a data-toggle="tab" href="#placeholder">Placeholder</a></li>
-        </ul>
 <!-- the below form for updating the invetory -->
-        <div class="tab-content">
-            <div id="inventory" class="tab-pane fade in active">
-                <h3>Inventory</h3>
+            <div id="inventory">
                 <form class="form" action="/Hospital-DBMS/HTML/update_inventory.php" method="POST">
                     <div class="form-group-sm">
                         <label for="med_id">Medicine ID:</label>
                         <input type="number" class="form-control" id="med_id" name="med_id" value="<?php echo $med_id; ?>"
-                            required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="med_name">Medicine Name:</label>
-                        <input type="text" class="form-control" id="med_name" name="med_name" value="<?php echo $med_name; ?>"
                             required>
                     </div>
                     <div class="form-group-sm">
@@ -154,24 +142,6 @@ if(isset($_POST["update_info"]))
                     </div>
                     <button type="submit" name="update_info" class="btn btn-default" value="submit">Submit</button>
                 </form>
-            </div>
-            <div id="placeholder" class="tab-pane fade">
-                <h3>Placeholder</h3>
-                <form class="form" action="/Hospital-DBMS/HTML/update_inventory.php" method="POST">
-                    <div class="form-group-sm">
-                        <label for="placeholder1">Placeholder1:</label>
-                        <input type="number" class="form-control" id="placeholder1" name="placeholder1" value=""
-                            required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="placeholder2">Placeholder2:</label>
-                        <input type="datetime-local" class="form-control" id="placeholder2" name="placeholder2"
-                            value="" required>
-                    </div>
-                    <button type="submit" name="update_info" class="btn btn-default" value="submit">Submit</button>
-                </form>
-            </div>
-        </div>
     </div>
 </body>
 
