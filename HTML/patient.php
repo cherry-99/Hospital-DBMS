@@ -126,8 +126,20 @@ $address = $answer[8];
                 <input type="tel" class="form-control" id="contact_no" name="contact_no" disabled value="<?php echo $ph_no; ?>">
             </div>
             <div class="form-group-sm">
-                <label for="address">Address:</label>
-                <input type="text" class="form-control" id="address" name="address" disabled value="<?php echo $address; ?>">
+                <label for="house_no">House No:</label>
+                <input type="number" class="form-control" id="house_no" name="house_no" disabled value="<?php echo $house_no; ?>">
+            </div>
+            <div class="form-group-sm">
+                <label for="street">Street:</label>
+                <input type="text" class="form-control" id="street" name="street" disabled value="<?php echo $street; ?>">
+            </div>
+            <div class="form-group-sm">
+                <label for="area">Area:</label>
+                <input type="text" class="form-control" id="area" name="area" disabled value="<?php echo $area; ?>">
+            </div>
+            <div class="form-group-sm">
+                <label for="city">City:</label>
+                <input type="text" class="form-control" id="city" name="city" disabled value="<?php echo $city; ?>">
             </div>
             <div class="form-group-sm">
                 <label for="admit_date">Admit Date:</label>
@@ -159,9 +171,21 @@ $address = $answer[8];
                 <label for="contact_no">Contact Number:</label>
                 <input type="number" class="form-control" id="contact_no" name="contact_no" value="<?php echo $ph_no; ?>" required>
             </div>
+             <div class="form-group-sm">
+                <label for="house_no">House No:</label>
+                <input type="number" class="form-control" id="house_no" name="house_no" value="<?php echo $house_no; ?>" required>
+            </div>
             <div class="form-group-sm">
-                <label for="address">Address:</label>
-                <input type="text" class="form-control" id="address" name="address" value="<?php echo $address; ?>" required>
+                <label for="street">Street:</label>
+                <input type="text" class="form-control" id="street" name="street" value="<?php echo $street; ?>" required>
+            </div>
+            <div class="form-group-sm">
+                <label for="area">Area:</label>
+                <input type="text" class="form-control" id="area" name="area" value="<?php echo $area; ?>" required>
+            </div>
+            <div class="form-group-sm">
+                <label for="city">City:</label>
+                <input type="text" class="form-control" id="city" name="city" value="<?php echo $city; ?>" required>
             </div>
             <button type="submit" name="update_info" class="btn btn-default" value="submit">Submit</button>
         </form>
