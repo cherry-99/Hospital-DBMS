@@ -125,7 +125,7 @@ $ph_no = $answer[6];
             </div>
             <div class="form-group-sm">
                 <h5><b>Gender:</b></h5>
-                <input type="text" class="form-control" id="name" name="name" disabled value="<?php echo $gender; ?>">
+                <input type="text" class="form-control" id="gender" name="gender" disabled value="<?php echo $gender; ?>">
             </div>
             <div class="form-group-sm">
                 <label for="age">Age:</label>
