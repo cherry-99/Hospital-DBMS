@@ -3,14 +3,14 @@ CREATE TABLE hospital_employee (
 	"employee_name" VARCHAR(30),
 	"gender" VARCHAR(7),
 	"age" INTEGER,
-	"emp_type" VARCHAR(8),
+	"emp_type" VARCHAR(12),
 	"salary" DECIMAL,
 	"contact_no" bigint UNIQUE
 );
 
 CREATE TABLE employee_login(
 	"emp_id" INTEGER,
-	"password" VARCHAR(15),
+	"password" INTEGER,
 	FOREIGN KEY ("emp_id") REFERENCES hospital_employee("emp_id") ON DELETE CASCADE
 );
 
@@ -46,23 +46,31 @@ CREATE TABLE patient (
 	"contact_no" bigint,
 	"admit_date" DATE,
 	"diagnosis" VARCHAR(30),
-	"discharge_date" DATE,
-	"address" VARCHAR(50)
+	"discharge_date" DATE
 );
 
 CREATE TABLE patient_login(
 	pat_id INTEGER,
-	pasword INTEGER,
+	password INTEGER,
 	FOREIGN KEY ("pat_id") REFERENCES patient("pat_id") ON DELETE CASCADE
 );
 
 CREATE TABLE emp_address (
 	"house_no" INTEGER,
-	"street" VARCHAR(10),
-	"area" VARCHAR(10),
-	"city" VARCHAR(10),
+	"street" VARCHAR(20),
+	"area" VARCHAR(40),
+	"city" VARCHAR(20),
 	"emp_id" INTEGER,
 	FOREIGN KEY ("emp_id") REFERENCES hospital_employee("emp_id") ON DELETE CASCADE
+);
+
+CREATE TABLE pat_address (
+	"house_no" INTEGER,
+	"street" VARCHAR(20),
+	"area" VARCHAR(40),
+	"city" VARCHAR(20),
+	"pat_id" INTEGER,
+	FOREIGN KEY ("pat_id") REFERENCES patient("pat_id") ON DELETE CASCADE
 );
 
 CREATE TABLE bill (
@@ -73,7 +81,6 @@ CREATE TABLE bill (
 	"hosp_charges" DECIMAL,
 	"med_fee" DECIMAL,
 	"room_fee" DECIMAL,
-	"lab_fee" DECIMAL,
 	"tax" DECIMAL,
 	"total" DECIMAL
 );
@@ -88,12 +95,6 @@ CREATE TABLE records (
 	"medication" VARCHAR(30),
 	"bill_id" INTEGER,
 	FOREIGN KEY ("bill_id") REFERENCES bill("bill_id") ON DELETE CASCADE
-);
-
-CREATE TABLE lab_reports (
-	"lab_id" serial PRIMARY KEY,
-	"amount" FLOAT,
-	"date" DATE
 );
 
 CREATE TABLE medicine_inventory (
@@ -124,13 +125,6 @@ CREATE TABLE room_assigned (
 	"pat_id" INTEGER,
 	FOREIGN KEY ("room_no") REFERENCES rooms("room_no") ON DELETE CASCADE,
 	FOREIGN KEY ("pat_id") REFERENCES patient("pat_id") ON DELETE CASCADE
-);
-
-CREATE TABLE lab_test (
-	"pat_id" INTEGER,
-	"lab_id" INTEGER,
-	FOREIGN KEY ("pat_id") REFERENCES patient("pat_id") ON DELETE CASCADE,
-	FOREIGN KEY ("lab_id") REFERENCES lab_reports("lab_id") ON DELETE CASCADE
 );
 
 CREATE TABLE medication (
