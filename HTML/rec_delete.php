@@ -106,7 +106,7 @@ if(isset($_POST["update_info"]))
                 <li><a href="rec_insert.php">Add</a></li>
                 <li><a href="rec_update.php">Change</a></li>
                 <li class="active"><a href="rec_delete.php">Remove</a></li>
-                <li><a href="rec_delete.php">Records</a></li>
+                <li><a href="view_database.php">View DB</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
