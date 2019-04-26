@@ -76,7 +76,7 @@ CREATE TABLE pat_address (
 CREATE TABLE bill (
 	"bill_id" serial PRIMARY KEY,
 	"pat_id" INTEGER,
-	"no_of_days" INTEGER,
+	-- "no_of_days" INTEGER,
 	"bill_date" DATE,
 	"hosp_charges" DECIMAL,
 	"med_fee" DECIMAL,

@@ -30,20 +30,17 @@ if(isset($_POST["discharge_pat"]))
     $query = "UPDATE patient SET discharge_date = '".$disch_date."' WHERE pat_id = $pat_id";
     $result = pg_query($db,$query);
     // create a bill
-    // $query = "INSERT INTO bill (pat_id) VALUES ('".$pat_id."')";
+    $admit_date = pg_fetch_result(pg_query("SELECT admit_date from patient where pat_id=$pat_id"),0,0);
+    echo $admit_date;
+    $no_of_days = pg_fetch_result(pg_query("SELECT DATE_PART('day',$disch_date-$admit_date);"),0,0);
+    echo $no_of_days;
+    // $query="INSERT INTO bill (pat_id,bill_date,med_fee,room_fee,hosp_charges,tax,total)
+    //         SELECT patient.pat_id, patient.discharge_date, medicine_inventory.cost, rooms.cost, (medicine_inventory.cost+rooms.cost)*0.25, (medicine_inventory.cost+rooms.cost)*0.18, (medicine_inventory.cost+rooms.cost)*1.25*1.18
+    //         FROM patient, rooms, medicine_inventory
+    //         WHERE patient.pat_id=$pat_id AND
+    //               rooms.room_no=(SELECT room_no FROM room_assigned WHERE pat_id=$pat_id) AND
+    //               medicine_inventory.med_id=(SELECT med_id FROM medication WHERE pat_id=$pat_id);";
     // $result = pg_query($db,$query);
-    // $query = "UPDATE bill SET bill_date = '".$disch_date."' WHERE pat_id = $pat_id";
-    // $result = pg_query($db,$query);
-    // $query = "UPDATE bill SET no_of_days FROM (SELECT discharge_date-admit_date FROM patient WHERE pat_id=$pat_id ) WHERE pat_id = $pat_id";
-    // $result = pg_query($db,$query);
-    $query="INSERT INTO bill (pat_id,bill_date,med_fee,room_fee,hosp_charges,tax,total)
-            SELECT patient.pat_id, patient.discharge_date, medicine_inventory.cost, rooms.cost, (medicine_inventory.cost+rooms.cost)*0.25, (medicine_inventory.cost+rooms.cost)*0.18, (medicine_inventory.cost+rooms.cost)*1.25*1.18
-            FROM patient, rooms, medicine_inventory
-            WHERE patient.pat_id=$pat_id AND
-                  rooms.room_no=(SELECT room_no FROM room_assigned WHERE pat_id=$pat_id) AND
-                  medicine_inventory.med_id=(SELECT med_id FROM medication WHERE pat_id=$pat_id);";
-    $result = pg_query($db,$query);
-    echo "done";
 }
 ?>
 

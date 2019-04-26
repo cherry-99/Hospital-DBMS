@@ -50,7 +50,7 @@ if(isset($_POST["update_password"]))
     {
         $query="UPDATE employee_login SET password = '".$new_psw."' WHERE emp_id = $emp_id";
         $result=pg_query($db,$query);
-        header("location: nurse.php");
+        header("location: login.html");
     }
 }
 //The following code is for retrieving the nurse details and displaying it in the form

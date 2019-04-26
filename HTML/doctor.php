@@ -53,7 +53,7 @@ if(isset($_POST["update_password"]))
     {
         $query="UPDATE employee_login SET password = '".$new_psw."' WHERE emp_id = $emp_id";
         $result=pg_query($db,$query);
-        header("location: doctor.php");
+        header("location: login.html");
     }
 }
 
