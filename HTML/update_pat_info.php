@@ -21,27 +21,25 @@ if(isset($_POST["update_info"]))
     $result2 = pg_query($db,$query2);
     header("location: update_pat_info.php");
 }
-
+//FIXXXXXXXXX THISSSSSSSSSSSSSSS
 //this is for updating the discharge date of the patient and creating records and bills
-if(isset($_POST["discharge_pat"]))
-{
-    $pat_id = $_POST["pat_id"];
-    $disch_date = $_POST["discharge"];
-    $query = "UPDATE patient SET discharge_date = '".$disch_date."' WHERE pat_id = $pat_id";
-    $result = pg_query($db,$query);
-    // create a bill
-    $admit_date = pg_fetch_result(pg_query("SELECT admit_date from patient where pat_id=$pat_id"),0,0);
-    echo $admit_date;
-    $no_of_days = pg_fetch_result(pg_query("SELECT DATE_PART('day',$disch_date-$admit_date);"),0,0);
-    echo $no_of_days;
-    // $query="INSERT INTO bill (pat_id,bill_date,med_fee,room_fee,hosp_charges,tax,total)
-    //         SELECT patient.pat_id, patient.discharge_date, medicine_inventory.cost, rooms.cost, (medicine_inventory.cost+rooms.cost)*0.25, (medicine_inventory.cost+rooms.cost)*0.18, (medicine_inventory.cost+rooms.cost)*1.25*1.18
-    //         FROM patient, rooms, medicine_inventory
-    //         WHERE patient.pat_id=$pat_id AND
-    //               rooms.room_no=(SELECT room_no FROM room_assigned WHERE pat_id=$pat_id) AND
-    //               medicine_inventory.med_id=(SELECT med_id FROM medication WHERE pat_id=$pat_id);";
-    // $result = pg_query($db,$query);
-}
+// if(isset($_POST["discharge_pat"]))
+// {
+//     $pat_id = $_POST["pat_id"];
+//     $disch_date = $_POST["discharge"];
+//     $query = "UPDATE patient SET discharge_date = '".$disch_date."' WHERE pat_id = $pat_id";
+//     $result = pg_query($db,$query);
+//     // create a bill
+//     $admit_date = pg_fetch_result(pg_query("SELECT admit_date from patient where pat_id=$pat_id"),0,0);
+//     echo $admit_date;
+//     $query="INSERT INTO bill (pat_id,bill_date,med_fee,room_fee,hosp_charges,tax,total)
+//             SELECT patient.pat_id, patient.discharge_date, medicine_inventory.cost, rooms.cost, (medicine_inventory.cost+rooms.cost)*0.25, (medicine_inventory.cost+rooms.cost)*0.18, (medicine_inventory.cost+rooms.cost)*1.25*1.18
+//             FROM patient, rooms, medicine_inventory
+//             WHERE patient.pat_id=$pat_id AND
+//                   rooms.room_no=(SELECT room_no FROM room_assigned WHERE pat_id=$pat_id) AND
+//                   medicine_inventory.med_id=(SELECT med_id FROM medication WHERE pat_id=$pat_id);";
+//     $result = pg_query($db,$query);
+// }
 ?>
 
 <!DOCTYPE html>

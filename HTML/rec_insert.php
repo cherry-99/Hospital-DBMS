@@ -217,10 +217,6 @@ $city = $answer[3];
                         <input type="text" class="form-control" id="diag" name="diag" required>
                     </div>
                     <div class="form-group-sm">
-                        <label for="discharge_date">Discharge Date:</label>
-                        <input type="date" class="form-control" id="discharge_date" name="discharge_date" required>
-                    </div>
-                    <div class="form-group-sm">
                         <label for="doc_id">Doctor Assigned(Doc ID):</label>
                         <input type="number" class="form-control" id="doc_id" name="doc_id" required>
                     </div><div class="form-group-sm">
