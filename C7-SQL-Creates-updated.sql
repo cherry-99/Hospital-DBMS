@@ -42,6 +42,7 @@ CREATE TABLE patient (
 	"pat_id" serial PRIMARY KEY,
 	"pat_name" VARCHAR(30),
 	"gender" VARCHAR(7),
+	"age" INT,
 	"date_of_birth" DATE,
 	"contact_no" bigint,
 	"admit_date" DATE,
