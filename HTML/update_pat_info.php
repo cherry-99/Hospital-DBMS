@@ -16,12 +16,35 @@ if(isset($_POST["update_info"]))
     $diagnosis=$_POST["diag"];
     $med_id = $_POST["med_id"];
     $query = "UPDATE patient SET diagnosis = '".$diagnosis."' WHERE pat_id = $pat_id";
-    $query2 = "UPDATE medication SET med_id = '".$med_id."' WHERE pat_id = $pat_id";
+    $query2 = "INSERT INTO medication(med_id,pat_id) VALUES ('".$med_id."','".$pat_id."')";
     $result = pg_query($db,$query);
     $result2 = pg_query($db,$query2);
-    header("location: doctor.php");
+    header("location: update_pat_info.php");
 }
 
+//this is for updating the discharge date of the patient and creating records and bills
+if(isset($_POST["discharge_pat"]))
+{
+    $pat_id = $_POST["pat_id"];
+    $disch_date = $_POST["discharge"];
+    $query = "UPDATE patient SET discharge_date = '".$disch_date."' WHERE pat_id = $pat_id";
+    $result = pg_query($db,$query);
+    // create a bill
+    // $query = "INSERT INTO bill (pat_id) VALUES ('".$pat_id."')";
+    // $result = pg_query($db,$query);
+    // $query = "UPDATE bill SET bill_date = '".$disch_date."' WHERE pat_id = $pat_id";
+    // $result = pg_query($db,$query);
+    // $query = "UPDATE bill SET no_of_days FROM (SELECT discharge_date-admit_date FROM patient WHERE pat_id=$pat_id ) WHERE pat_id = $pat_id";
+    // $result = pg_query($db,$query);
+    $query="INSERT INTO bill (pat_id,bill_date,med_fee,room_fee,hosp_charges,tax,total)
+            SELECT patient.pat_id, patient.discharge_date, medicine_inventory.cost, rooms.cost, (medicine_inventory.cost+rooms.cost)*0.25, (medicine_inventory.cost+rooms.cost)*0.18, (medicine_inventory.cost+rooms.cost)*1.25*1.18
+            FROM patient, rooms, medicine_inventory
+            WHERE patient.pat_id=$pat_id AND
+                  rooms.room_no=(SELECT room_no FROM room_assigned WHERE pat_id=$pat_id) AND
+                  medicine_inventory.med_id=(SELECT med_id FROM medication WHERE pat_id=$pat_id);";
+    $result = pg_query($db,$query);
+    echo "done";
+}
 ?>
 
 <!DOCTYPE html>
@@ -64,13 +87,6 @@ if(isset($_POST["update_info"]))
         </div>
     </nav>
 
-    <?php  if (count($errors1) > 0) : ?>
-    <div class="error">
-        <?php foreach ($errors1 as $error) : ?>
-        <p><?php echo $error ?></p>
-        <?php endforeach ?>
-    </div>
-    <?php  endif ?>
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#pat_diag">Diagnosis</a></li>
@@ -164,9 +180,9 @@ if(isset($_POST["update_info"]))
                     </div>
                     <div class="form-group-sm">
                         <label for="discharge">Discharge Date:</label>
-                        <input type="datetime-local" class="form-control" id="discharge" name="discharge" required>
+                        <input type="date" class="form-control" id="discharge" name="discharge" required>
                     </div>
-                    <button type="submit" name="update_info" class="btn btn-default" value="submit">Submit</button>
+                    <button type="submit" name="discharge_pat" class="btn btn-default" value="submit">Submit</button>
                 </form>
             </div>
         </div>

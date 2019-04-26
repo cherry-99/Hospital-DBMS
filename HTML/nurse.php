@@ -38,7 +38,7 @@ if(isset($_POST["update_password"]))
     {
         array_push($errors1,"NEW PASSWORDS DO NOT MATCH");
     }
-    if($currr_psw != $check_psw)
+    if($curr_psw != $check_psw)
     {
         array_push($errors1,"CURRENT PASSWORD DOES NOT MATCH");
     }
