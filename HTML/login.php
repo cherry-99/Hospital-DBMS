@@ -61,12 +61,18 @@ if(isset($_POST["submit_emp"]))
         }
         else
         {
-            array_push($errors,"Password does not match Username");
+            echo '<script language="javascript">';
+            echo 'alert("Username and Password do not match")';
+            echo '</script>';
+            array_push($errors,"0");
         }
     }
     else
     {
-        array_push($errors,"Username not found");
+        echo '<script language="javascript">';
+        echo 'alert("Username not found")';
+        echo '</script>';
+        array_push($errors,"1");
     }
 }
 
@@ -89,12 +95,18 @@ if(isset($_POST["submit_pat"]))
         }
         else
         {
-            array_push($errors,"Password does not match Username");
+            echo '<script language="javascript">';
+            echo 'alert("Username and Password do not match")';
+            echo '</script>';
+            array_push($errors,"0");
         }
     }
     else
     {
-        array_push($errors,"Username not found");
+        echo '<script language="javascript">';
+        echo 'alert("Username not found")';
+        echo '</script>';
+        array_push($errors,"1");
     }
 }
 ?>
@@ -102,14 +114,6 @@ if(isset($_POST["submit_pat"]))
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <?php  if (count($errors) > 0) : ?>
-        <div class="error">
-  	        <?php foreach ($errors as $error) : ?>
-  	            <p><?php echo $error ?></p>
-  	        <?php endforeach ?>
-        </div>
-    <?php  endif ?>
 
     <title>Hospital Database</title>
     <meta charset="utf-8">
@@ -140,9 +144,6 @@ if(isset($_POST["submit_pat"]))
                     <div class="form-group">
                         <input type="submit" class="btnSubmit" name="submit_emp" value="Login" />
                     </div>
-                    <!-- <div class="form-group">
-                        <a href="#" class="ForgetPwd">Forget Password?</a>
-                    </div> -->
                 </form>
             </div>
             <div class="col-md-6 login-form-2">
