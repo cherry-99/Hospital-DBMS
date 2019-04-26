@@ -9,48 +9,6 @@ $errors1 = array();
 $emp_id = $_COOKIE["empid"];
 $r_id = $_COOKIE["r_id"];
 
-//We dont need the below part. It is for the patient to update his details. But the form is for the doctor to update the patient details
-// if(isset($_POST["update_info"]))
-// {
-//     $name=$_POST["name"];
-//     $contact_no=$_POST["contact_no"];
-//     $dob=$_POST["dob"];
-//     $address=$_POST["address"];
-//     $query = "UPDATE patient SET pat_name='".$name."',address='".$address."',date_of_birth='".$dob."',contact_no='".$contact_no."' WHERE pat_id = $pat_id";
-//     $result = pg_query($db,$query);
-//     header("location: rec_insert.php");
-// }
-
-//The below part is for patient login verification. Not needed here.
-// if(isset($_POST["update_password"]))
-// {
-//     $curr_psw=$_POST["curr_psw"];
-//     $new_psw=$_POST["new_psw"];
-//     $rep_psw=$_POST["rep_new_psw"];
-//     if($rep_psw!=$new_psw)
-//     {
-//         array_push($errors1,"REPEAT NEW PASSWORD MUST MATCH NEW PASSWORD");
-//     }
-//     $query="SELECT * FROM PATIENT_LOGIN WHERE PAT_ID=$pat_id";
-//     $result=pg_query($db,$query);
-//     $pword=pg_fetch_result($result,0,1);
-//     if($curr_psw!=$pword)
-//     {
-//         array_push($errors1,"Current Password Does Not Match");
-//     }
-//     if(count($errors1)>0)
-//     {
-//         echo '<script type="text/javascript">','patient_forms(3); ','</script>';
-//     }
-//     else
-//     {
-//         $query = "UPDATE patient_login SET pasword='".$new_psw."' WHERE pat_id=$pat_id";
-//         $result = pg_query($db,$query);
-//         header("location: login.html");
-//     }
-// }
-
-//The following is for the doctor to update the patient diagnosis details
 if(isset($_POST["update_info"]))
 {
     $pat_id = $_POST["pat_id"];
@@ -62,19 +20,6 @@ if(isset($_POST["update_info"]))
     $result2 = pg_query($db,$query2);
     header("location: rec_insert.php");
 }
-
-//Below code is not necessary. We are not displaying the patient details anywhere in the form
-// $query = "SELECT * FROM patient WHERE pat_id = $pat_id";
-// $result = pg_query($db,$query);
-// $answer = pg_fetch_array($result);
-// $name = $answer[1];
-// $gender = $answer[2];
-// $dob = $answer[3];
-// $ph_no = $answer[4];
-// $admit_date = $answer[5];
-// $diagnosis = $answer[6];
-// $discharge_date = $answer[7];
-// $address = $answer[8];
 
 ?>
 
@@ -123,13 +68,6 @@ if(isset($_POST["update_info"]))
         </div>
     </nav>
 
-    <?php  if (count($errors1) > 0) : ?>
-    <div class="error">
-        <?php foreach ($errors1 as $error) : ?>
-        <p><?php echo $error ?></p>
-        <?php endforeach ?>
-    </div>
-    <?php  endif ?>
     <div id="insert_div" class="container">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#emp">Employee</a></li>

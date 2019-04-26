@@ -7,8 +7,7 @@ $db = pg_connect("$host $port $dbname $credentials");
 $errors1 = array();
 $emp_id = $_COOKIE["empid"];
 $nurse_id = $_COOKIE["nurse_id"];
-//This is for the nurse to update his details
-//Corrected the SQL query
+
 if(isset($_POST["update_info"]))
 {
     $age = $_POST["age"];
@@ -24,7 +23,7 @@ if(isset($_POST["update_info"]))
     $result = pg_query($db,$query);
     header("location: nurse.php");
 }
-//This is for the nurse to update his password
+
 if(isset($_POST["update_password"]))
 {
     $curr_psw=$_POST["curr_psw"];
@@ -36,17 +35,19 @@ if(isset($_POST["update_password"]))
     $check_psw = $result_array["password"];
     if($rep_psw!=$new_psw)
     {
-        array_push($errors1,"NEW PASSWORDS DO NOT MATCH");
+        echo '<script language="javascript">';
+        echo 'alert("Repeat Password does not match New password")';
+        echo '</script>';
+        array_push($errors1,"1");
     }
     if($curr_psw != $check_psw)
     {
-        array_push($errors1,"CURRENT PASSWORD DOES NOT MATCH");
+        echo '<script language="javascript">';
+        echo 'alert("Current Password does not match")';
+        echo '</script>';
+        array_push($errors1,"0");
     }
-    if(count($errors1)>0)
-    {
-        echo '<script type="text/javascript">','patient_forms(3);','</script>';
-    }
-    else
+    if(count($errors1)<=0)
     {
         $query="UPDATE employee_login SET password = '".$new_psw."' WHERE emp_id = $emp_id";
         $result=pg_query($db,$query);
@@ -113,13 +114,7 @@ $city = $answer[3];
             </ul>
         </div>
     </nav>
-    <?php  if (count($errors1) > 0) : ?>
-            <div class="error">
-  	            <?php foreach ($errors1 as $error) : ?>
-  	                <p><?php echo $error ?></p>
-  	            <?php endforeach ?>
-            </div>
-    <?php  endif ?>
+
     <div id="nurse_details">
         <form class="form">
             <div class="form-group-sm">

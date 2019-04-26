@@ -9,8 +9,6 @@ $errors1 = array();
 $emp_id = $_COOKIE["empid"];
 $doc_id = $_COOKIE["doc_id"];
 
-//This is for the doctor to update his details
-//Corrected the SQL query
 if(isset($_POST["update_info"]))
 {
     $age = $_POST["age"];
@@ -27,7 +25,6 @@ if(isset($_POST["update_info"]))
     header("location: doctor.php");
 }
 
-//This is for the doctor to update his password
 if(isset($_POST["update_password"]))
 {
     $curr_psw=$_POST["curr_psw"];
@@ -39,17 +36,19 @@ if(isset($_POST["update_password"]))
     $check_psw = $result_array["password"];
     if($rep_psw!=$new_psw)
     {
-        array_push($errors1,"NEW PASSWORDS DO NOT MATCH");
+        echo '<script language="javascript">';
+        echo 'alert("Repeat Password does not match New password")';
+        echo '</script>';
+        array_push($errors1,"1");
     }
     if($curr_psw != $check_psw)
     {
-        array_push($errors1,"CURRENT PASSWORD DOES NOT MATCH");
+        echo '<script language="javascript">';
+        echo 'alert("Current Password does not match")';
+        echo '</script>';
+        array_push($errors1,"0");
     }
-    if(count($errors1)>0)
-    {
-        echo '<script type="text/javascript">','patient_forms(3);','</script>';
-    }
-    else
+    if(count($errors1)<=0)
     {
         $query="UPDATE employee_login SET password = '".$new_psw."' WHERE emp_id = $emp_id";
         $result=pg_query($db,$query);
@@ -57,7 +56,6 @@ if(isset($_POST["update_password"]))
     }
 }
 
-//The following code is for retrieving the doctor details and displaying it in the form
 $query = "SELECT employee_name , gender, age, emp_type, salary ,contact_no FROM hospital_employee WHERE emp_id = $emp_id";
 $result = pg_query($db,$query);
 $answer = pg_fetch_array($result);
@@ -117,13 +115,7 @@ $city = $answer[3];
             </ul>
         </div>
     </nav>
-    <?php  if (count($errors1) > 0) : ?>
-            <div class="error">
-  	            <?php foreach ($errors1 as $error) : ?>
-  	                <p><?php echo $error ?></p>
-  	            <?php endforeach ?>
-            </div>
-    <?php  endif ?>
+
     <div id="doc_details">
         <form class="form">
             <div class="form-group-sm">

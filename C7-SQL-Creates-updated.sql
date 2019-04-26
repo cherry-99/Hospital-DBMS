@@ -86,7 +86,7 @@ CREATE TABLE bill (
 );
 
 CREATE TABLE records (
-	"Patient_name" VARCHAR(30),
+	"patient_name" VARCHAR(30),
 	"pat_id" serial PRIMARY KEY,
 	"doc_id" INTEGER,
 	"diagnosis" VARCHAR(30),

@@ -62,13 +62,6 @@ if(isset($_POST["update_info"]))
         </div>
     </nav>
 
-    <?php  if (count($errors1) > 0) : ?>
-    <div class="error">
-        <?php foreach ($errors1 as $error) : ?>
-        <p><?php echo $error ?></p>
-        <?php endforeach ?>
-    </div>
-    <?php  endif ?>
 <!-- the below form for updating the invetory -->
             <div id="inventory">
                 <form class="form" action="/Hospital-DBMS/HTML/update_inventory.php" method="POST">
