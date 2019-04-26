@@ -21,10 +21,31 @@ if(isset($_POST["submit_emp"]))
         $answer=pg_fetch_result($result,0,1);
         if($answer==$pword)
         {
-            header("location: doctor.php");
+            $query = "SELECT emp_type FROM HOSPITAL_EMPLOYEE WHERE EMP_ID='".$uname."'";
+            $result = pg_query($db,$query);
             $cookiename = "empid";
             $cookievalue = $uname;
             setcookie($cookiename, $cookievalue, time() + (86400), "/");
+            $emp_type = pg_fetch_result($result,0,0);
+            if($emp_type=='NURSE')
+            {
+                $query = "SELECT nurse_id FROM nurse WHERE EMP_ID='".$uname."'";
+                $result = pg_query($db,$query);
+                $nurse_id = pg_fetch_result($result,0,0);
+                $cookiename = "nurse_id";
+                $cookievalue = $nurse_id;
+                header("location: nurse.php");
+            }
+            if($emp_type=="DOCTOR")
+            {
+                $query = "SELECT doc_id FROM doctor WHERE EMP_ID='".$uname."'";
+                $result = pg_query($db,$query);
+                $doc_id = pg_fetch_result($result,0,0);
+                $cookiename = "doc_id";
+                $cookievalue = $doc_id;
+                header("location: doctor.php");
+            }
+            
         }
         else
         {
