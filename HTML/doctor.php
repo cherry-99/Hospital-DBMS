@@ -7,6 +7,7 @@ $credentials = "user = postgres password=15739";
 $db = pg_connect("$host $port $dbname $credentials");
 $errors1 = array();
 $emp_id = $_COOKIE["empid"];
+$doc_id = $_COOKIE["doc_id"];
 
 //This is for the doctor to update his details
 //Corrected the SQL query
@@ -15,8 +16,13 @@ if(isset($_POST["update_info"]))
     $age = $_POST["age"];
     $name=$_POST["name"];
     $contact_no=$_POST["contact_no"];
-    // $address=$_POST["address"]; add more fields to address or remove address
+    $house_no = $_POST["house_no"];
+    $street = $_POST["street"];
+    $area =$_POST["area"];
+    $city =$_POST["city"];
     $query = "UPDATE hospital_employee SET employee_name='".$name."',contact_no='".$contact_no."', age = '".$age."' WHERE emp_id = $emp_id";
+    $result = pg_query($db,$query);
+    $query = "UPDATE emp_address SET house_no='".$house_no."',street='".$street."', area = '".$area."',city = '".$city."' WHERE emp_id = $emp_id";
     $result = pg_query($db,$query);
     header("location: doctor.php");
 }
@@ -27,46 +33,47 @@ if(isset($_POST["update_password"]))
     $curr_psw=$_POST["curr_psw"];
     $new_psw=$_POST["new_psw"];
     $rep_psw=$_POST["rep_new_psw"];
-    //Added new condition. The current password which the doctor enters should also be correct.
     $query = "SELECT password FROM EMPLOYEE_LOGIN WHERE emp_id = $emp_id";
     $result = pg_query($query,$db);
     $result_array = pg_fetch_assoc($result);
     $check_psw = $result_array[password];
-    if($rep_psw!=$new_psw || $curr_psw != $check_psw)
+    if($rep_psw!=$new_psw)
     {
         array_push($errors1,"NEW PASSWORDS DO NOT MATCH");
     }
-    $query="UPDATE employee_login SET password = '".$new_psw."' WHERE emp_id = $emp_id";
-    $result=pg_query($db,$query);
-    header("location: doctor.php");
-    // $pword=pg_fetch_result($result,0,1);
-    // if($curr_psw!=$pword)
-    // {
-    //     array_push($errors1,"Current Password Does Not Match");
-    // }
-    // if(count($errors1)>0)
-    // {
-    //     echo '<script type="text/javascript">','patient_forms(3);','</script>';
-    // }
-    // else
-    // {
-    //     $query = "UPDATE patient_login SET pasword='".$new_psw."' WHERE pat_id=$pat_id";
-    //     $result = pg_query($db,$query);
-    //     header("location: login.html");
-    // }
+    if($currr_psw != $check_psw)
+    {
+        array_push($errors1,"CURRENT PASSWORD DOES NOT MATCH");
+    }
+    if(count($errors1)>0)
+    {
+        echo '<script type="text/javascript">','patient_forms(3);','</script>';
+    }
+    else
+    {
+        $query="UPDATE employee_login SET password = '".$new_psw."' WHERE emp_id = $emp_id";
+        $result=pg_query($db,$query);
+        header("location: doctor.php");
+    }
 }
 
 //The following code is for retrieving the doctor details and displaying it in the form
-//Remove the address field or add multiple fields so that we can retrieve the same in order from the address cross reference table
 $query = "SELECT employee_name , gender, age, emp_type, salary ,contact_no FROM hospital_employee WHERE emp_id = $emp_id";
 $result = pg_query($db,$query);
 $answer = pg_fetch_array($result);
-$name = $answer[1];
-$gender = $answer[2];
-$age = $answer[3];
-$emp_type = $answer[4];
-$salary = $answer[5];
-$ph_no = $answer[6];
+$name = $answer[0];
+$gender = $answer[1];
+$age = $answer[2];
+$emp_type = $answer[3];
+$salary = $answer[4];
+$ph_no = $answer[5];
+$query = "SELECT house_no , street, area, city FROM emp_address WHERE emp_id = $emp_id";
+$result = pg_query($db,$query);
+$answer = pg_fetch_array($result);
+$house_no = $answer[1];
+$street = $answer[2];
+$area = $answer[3];
+$city = $answer[4];
 
 ?>
 

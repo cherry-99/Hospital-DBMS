@@ -3,11 +3,10 @@ $host = "host = localhost";
 $port = "port = 5432";
 $dbname = "dbname = test";
 $credentials = "user = postgres password=15739";
-
 $db = pg_connect("$host $port $dbname $credentials");
 $errors1 = array();
 $emp_id = $_COOKIE["empid"];
-
+$nurse_id = $_COOKIE["nurse_id"];
 //This is for the nurse to update his details
 //Corrected the SQL query
 if(isset($_POST["update_info"]))
@@ -15,59 +14,63 @@ if(isset($_POST["update_info"]))
     $age = $_POST["age"];
     $name=$_POST["name"];
     $contact_no=$_POST["contact_no"];
-    // $address=$_POST["address"]; add more fields to address or remove address
+    $house_no = $_POST["house_no"];
+    $street = $_POST["street"];
+    $area =$_POST["area"];
+    $city =$_POST["city"];
     $query = "UPDATE hospital_employee SET employee_name='".$name."',contact_no='".$contact_no."', age = '".$age."' WHERE emp_id = $emp_id";
+    $result = pg_query($db,$query);
+    $query = "UPDATE emp_address SET house_no='".$house_no."',street='".$street."', area = '".$area."',city = '".$city."' WHERE emp_id = $emp_id";
     $result = pg_query($db,$query);
     header("location: nurse.php");
 }
-
 //This is for the nurse to update his password
 if(isset($_POST["update_password"]))
 {
     $curr_psw=$_POST["curr_psw"];
     $new_psw=$_POST["new_psw"];
     $rep_psw=$_POST["rep_new_psw"];
-    //Added new condition. The current password which the nurse enters should also be correct.
     $query = "SELECT password FROM EMPLOYEE_LOGIN WHERE emp_id = $emp_id";
     $result = pg_query($query,$db);
     $result_array = pg_fetch_assoc($result);
     $check_psw = $result_array[password];
-    if($rep_psw!=$new_psw || $curr_psw != $check_psw)
+    if($rep_psw!=$new_psw)
     {
         array_push($errors1,"NEW PASSWORDS DO NOT MATCH");
     }
-    $query="UPDATE employee_login SET password = '".$new_psw."' WHERE emp_id = $emp_id";
-    $result=pg_query($db,$query);
-    header("location: nurse.php");
-    // $pword=pg_fetch_result($result,0,1);
-    // if($curr_psw!=$pword)
-    // {
-    //     array_push($errors1,"Current Password Does Not Match");
-    // }
-    // if(count($errors1)>0)
-    // {
-    //     echo '<script type="text/javascript">','patient_forms(3);','</script>';
-    // }
-    // else
-    // {
-    //     $query = "UPDATE patient_login SET pasword='".$new_psw."' WHERE pat_id=$pat_id";
-    //     $result = pg_query($db,$query);
-    //     header("location: login.html");
-    // }
+    if($currr_psw != $check_psw)
+    {
+        array_push($errors1,"CURRENT PASSWORD DOES NOT MATCH");
+    }
+    if(count($errors1)>0)
+    {
+        echo '<script type="text/javascript">','patient_forms(3);','</script>';
+    }
+    else
+    {
+        $query="UPDATE employee_login SET password = '".$new_psw."' WHERE emp_id = $emp_id";
+        $result=pg_query($db,$query);
+        header("location: nurse.php");
+    }
 }
-
 //The following code is for retrieving the nurse details and displaying it in the form
 //Remove the address field or add multiple fields so that we can retrieve the same in order from the address cross reference table
 $query = "SELECT employee_name , gender, age, emp_type, salary ,contact_no FROM hospital_employee WHERE emp_id = $emp_id";
 $result = pg_query($db,$query);
 $answer = pg_fetch_array($result);
-$name = $answer[1];
-$gender = $answer[2];
-$age = $answer[3];
-$emp_type = $answer[4];
-$salary = $answer[5];
-$ph_no = $answer[6];
-
+$name = $answer[0];
+$gender = $answer[1];
+$age = $answer[2];
+$emp_type = $answer[3];
+$salary = $answer[4];
+$ph_no = $answer[5];
+$query = "SELECT house_no , street, area, city FROM emp_address WHERE emp_id = $emp_id";
+$result = pg_query($db,$query);
+$answer = pg_fetch_array($result);
+$house_no = $answer[0];
+$street = $answer[1];
+$area = $answer[2];
+$city = $answer[3];
 ?>
 
 <!DOCTYPE html>
@@ -137,7 +140,7 @@ $ph_no = $answer[6];
             </div>
             <div class="form-group-sm">
                 <label for="job_type">Job Type:</label>
-                <input type="text" class="form-control" id="job_type" name="job_type" disabled value="<?php echo $job_type; ?>">
+                <input type="text" class="form-control" id="job_type" name="job_type" disabled value="<?php echo $emp_type; ?>">
             </div>
             <div class="form-group-sm">
                 <label for="house_no">House No:</label>
@@ -160,8 +163,32 @@ $ph_no = $answer[6];
                 <input type="text" class="form-control" id="salary" name="salary" disabled value="<?php echo $salary; ?>">
             </div>
         </form>
+        <?php 
+            $host = "host = localhost";
+            $port = "port = 5432";
+            $dbname = "dbname = test";
+            $credentials = "user = postgres password=15739";
+            $db = pg_connect("$host $port $dbname $credentials");
+            $query="CREATE VIEW nurse_rooms AS SELECT room_incharge.room_no,room_assigned.pat_id,pat_name FROM room_incharge LEFT OUTER JOIN room_assigned ON room_incharge.room_no=room_assigned.room_no LEFT OUTER JOIN patient ON room_assigned.pat_id=patient.pat_id WHERE room_incharge.nurse_id=$nurse_id";
+            $result = pg_query($db,$query);
+            $query = "SELECT * FROM nurse_rooms";
+            $result = pg_query($db,$query);
+            echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+            echo "<thead><tr><th>ROOM NO</th><th>Patient ID</th> <th>PATIENT NAME</th></tr></thead><tbody>";
+            // loop through results of database query, displaying them in the table
+            while($row = pg_fetch_array( $result )) 
+            {
+                    // echo out the contents of each row into a table
+                    echo "<tr>";
+                    echo '<td>' . $row['room_no'] . '</td>';
+                    echo '<td>' . $row['pat_id'] . '</td>';
+                    echo '<td>' . $row['pat_name'] . '</td>'.'</tr>';
+            }
+            echo "</tbody></table>";
+            $query="DROP VIEW nurse_rooms";
+            $result = pg_query($db,$query);
+        ?>
     </div>
-
     <div id="info_form">
         <form class="form" action="/Hospital-DBMS/HTML/nurse.php" method="POST" >
             <div class="form-group-sm">

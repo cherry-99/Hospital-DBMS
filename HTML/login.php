@@ -34,6 +34,7 @@ if(isset($_POST["submit_emp"]))
                 $nurse_id = pg_fetch_result($result,0,0);
                 $cookiename = "nurse_id";
                 $cookievalue = $nurse_id;
+                setcookie($cookiename, $cookievalue, time() + (86400), "/");
                 header("location: nurse.php");
             }
             if($emp_type=="DOCTOR")
@@ -43,6 +44,7 @@ if(isset($_POST["submit_emp"]))
                 $doc_id = pg_fetch_result($result,0,0);
                 $cookiename = "doc_id";
                 $cookievalue = $doc_id;
+                setcookie($cookiename, $cookievalue, time() + (86400), "/");
                 header("location: doctor.php");
             }
             
