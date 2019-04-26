@@ -31,9 +31,9 @@ if(isset($_POST["update_password"]))
     $new_psw=$_POST["new_psw"];
     $rep_psw=$_POST["rep_new_psw"];
     $query = "SELECT password FROM EMPLOYEE_LOGIN WHERE emp_id = $emp_id";
-    $result = pg_query($query,$db);
+    $result = pg_query($db,$query);
     $result_array = pg_fetch_assoc($result);
-    $check_psw = $result_array[password];
+    $check_psw = $result_array["password"];
     if($rep_psw!=$new_psw)
     {
         array_push($errors1,"NEW PASSWORDS DO NOT MATCH");
