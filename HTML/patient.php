@@ -60,10 +60,10 @@ $discharge_date = $answer[7];
 $query = "SELECT house_no , street, area, city FROM pat_address WHERE pat_id = $pat_id";
 $result = pg_query($db,$query);
 $answer = pg_fetch_array($result);
-$house_no = $answer[1];
-$street = $answer[2];
-$area = $answer[3];
-$city = $answer[4];
+$house_no = $answer[0];
+$street = $answer[1];
+$area = $answer[2];
+$city = $answer[3];
 
 ?>
 
