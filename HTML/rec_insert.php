@@ -17,7 +17,7 @@ $errors1 = array();
 //     $address=$_POST["address"];
 //     $query = "UPDATE patient SET pat_name='".$name."',address='".$address."',date_of_birth='".$dob."',contact_no='".$contact_no."' WHERE pat_id = $pat_id";
 //     $result = pg_query($db,$query);
-//     header("location: doctor.php");
+//     header("location: rec_insert.php");
 // }
 
 //The below part is for patient login verification. Not needed here.
@@ -59,7 +59,7 @@ if(isset($_POST["update_info"]))
     $query2 = "UPDATE medication SET med_id = '".$med_id."' WHERE pat_id = $pat_id";
     $result = pg_query($db,$query);
     $result2 = pg_query($db,$query2);
-    header("location: doctor.php");
+    header("location: rec_insert.php");
 }
 
 //Below code is not necessary. We are not displaying the patient details anywhere in the form
@@ -85,10 +85,10 @@ if(isset($_POST["update_info"]))
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="main.css">
-    <script src="myScript.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="main.css">
+    <script src="myScript.js"></script>
 
 
 
@@ -103,7 +103,7 @@ if(isset($_POST["update_info"]))
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="rec_insert.php">Add</a></li>
+                <li class="active" onclick="rec_forms(1)"><a href="#">Add</a></li>
                 <li><a href="rec_update.php">Change</a></li>
                 <li><a href="rec_delete.php">Remove</a></li>
                 <li><a href="view_database.php">View DB</a></li>
@@ -113,8 +113,8 @@ if(isset($_POST["update_info"]))
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
                             class="glyphicon glyphicon-user"></span> Account <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li onclick="doctor_forms(2)"><a href="doctor.php">Update Information</a></li>
-                        <li onclick="doctor_forms(3)"><a href="doctor.php">Change Password</a></li>
+                        <li onclick="rec_forms(2)"><a href="#">Update Information</a></li>
+                        <li onclick="rec_forms(3)"><a href="#">Change Password</a></li>
                         <li><a href="login.html">Log Out</a></li>
                     </ul>
                 </li>
@@ -129,7 +129,7 @@ if(isset($_POST["update_info"]))
         <?php endforeach ?>
     </div>
     <?php  endif ?>
-    <div class="container">
+    <div id="insert_div" class="container">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#emp">Employee</a></li>
             <li><a data-toggle="tab" href="#pat">Patient</a></li>
@@ -258,6 +258,21 @@ if(isset($_POST["update_info"]))
                 </form>
             </div>
         </div>
+    </div>
+
+    <div id="pass_form">
+        <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Current Password" name="curr_psw" value="" required />
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="New Password" name="new_psw" value="" required />
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Repeat New Password" name="rep_new_psw" value="" required />
+            </div>
+            <button type="submit" name="update_password" class="btn btn-default" value="submit">Submit</button>
+        </form>
     </div>
 </body>
 

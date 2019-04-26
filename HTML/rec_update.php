@@ -17,7 +17,7 @@ $errors1 = array();
 //     $address=$_POST["address"];
 //     $query = "UPDATE patient SET pat_name='".$name."',address='".$address."',date_of_birth='".$dob."',contact_no='".$contact_no."' WHERE pat_id = $pat_id";
 //     $result = pg_query($db,$query);
-//     header("location: doctor.php");
+//     header("location: rec_update.php");
 // }
 
 //The below part is for patient login verification. Not needed here.
@@ -59,7 +59,7 @@ if(isset($_POST["update_info"]))
     $query2 = "UPDATE medication SET med_id = '".$med_id."' WHERE pat_id = $pat_id";
     $result = pg_query($db,$query);
     $result2 = pg_query($db,$query2);
-    header("location: doctor.php");
+    header("location: rec_update.php");
 }
 
 //Below code is not necessary. We are not displaying the patient details anywhere in the form
@@ -103,8 +103,8 @@ if(isset($_POST["update_info"]))
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="rec_insert.php">Add</a></li>
-                <li><a href="rec_update.php">Change</a></li>
+                <li><a href="rec_insert.php">Add</a></li>
+                <li class="active"><a href="rec_update.php">Change</a></li>
                 <li><a href="rec_delete.php">Remove</a></li>
                 <li><a href="view_database.php">View DB</a></li>
             </ul>
@@ -113,8 +113,8 @@ if(isset($_POST["update_info"]))
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
                             class="glyphicon glyphicon-user"></span> Account <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li onclick="doctor_forms(2)"><a href="doctor.php">Update Information</a></li>
-                        <li onclick="doctor_forms(3)"><a href="doctor.php">Change Password</a></li>
+                        <li><a href="rec_insert.php">Update Information</a></li>
+                        <li><a href="rec_insert.php">Change Password</a></li>
                         <li><a href="login.html">Log Out</a></li>
                     </ul>
                 </li>
@@ -134,11 +134,14 @@ if(isset($_POST["update_info"]))
             <li class="active"><a data-toggle="tab" href="#emp">Employee</a></li>
             <li><a data-toggle="tab" href="#pat">Patient</a></li>
             <li><a data-toggle="tab" href="#med_inv">Medicine Inventory</a></li>
+            <li><a data-toggle="tab" href="#nur">Nurse</a></li>
+            <li><a data-toggle="tab" href="#house_keep">Housekeeping</a></li>
+            <li><a data-toggle="tab" href="#patdoc">Pat-Doc</a></li>
         </ul>
         <div class="tab-content">
             <div id="emp" class="tab-pane fade in active">
                 <h3>Employee</h3>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
+                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
                     <div class="form-group-sm">
                         <label for="name">Name:</label>
                         <input type="text" class="form-control" id="name" name="name" required>
@@ -179,12 +182,12 @@ if(isset($_POST["update_info"]))
                         <label for="salary">Salary:</label>
                         <input type="number" class="form-control" id="salary" name="salary" required>
                     </div>
-                    <button type="submit" name="insert_emp" class="btn btn-default" value="submit">Submit</button>
+                    <button type="submit" name="update_emp" class="btn btn-default" value="submit">Submit</button>
                 </form>
             </div>
             <div id="pat" class="tab-pane fade">
                 <h3>Patient</h3>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
+                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
                     <div class="form-group-sm">
                         <label for="name">Name:</label>
                         <input type="text" class="form-control" id="name" name="name" required>
@@ -236,12 +239,12 @@ if(isset($_POST["update_info"]))
                         <label for="room_id">Room Assigned(Room ID):</label>
                         <input type="number" class="form-control" id="room_id" name="room_id" required>
                     </div>
-                    <button type="submit" name="insert_pat" class="btn btn-default" value="submit">Submit</button>
+                    <button type="submit" name="update_pat" class="btn btn-default" value="submit">Submit</button>
                 </form>
             </div>
             <div id="med_inv" class="tab-pane fade">
                 <h3>Medicine Inventory</h3>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
+                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
                     <div class="form-group-sm">
                         <label for="name">Medicine Name:</label>
                         <input type="text" class="form-control" id="name" name="name" required>
@@ -254,7 +257,49 @@ if(isset($_POST["update_info"]))
                         <label for="quantity">Quantity:</label>
                         <input type="number" class="form-control" id="quantity" name="quantity" required>
                     </div>
-                    <button type="submit" name="insert_med_inv" class="btn btn-default" value="submit">Submit</button>
+                    <button type="submit" name="update_med_inv" class="btn btn-default" value="submit">Submit</button>
+                </form>
+            </div>
+            <div id="nur" class="tab-pane fade">
+                <h3>Nurse</h3>
+                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
+                    <div class="form-group-sm">
+                        <label for="room_id">Room ID:</label>
+                        <input type="number" class="form-control" id="room_id" name="room_id" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="nurse_id">Nurse ID:</label>
+                        <input type="number" class="form-control" id="nurse_id" name="nurse_id" required>
+                    </div>
+                    <button type="submit" name="update_nur" class="btn btn-default" value="submit">Submit</button>
+                </form>
+            </div>
+            <div id="house_keep" class="tab-pane fade">
+                <h3>Housekeeping</h3>
+                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
+                    <div class="form-group-sm">
+                        <label for="room_id">Room ID:</label>
+                        <input type="number" class="form-control" id="room_id" name="room_id" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="hk_id">Housekeeping ID:</label>
+                        <input type="number" class="form-control" id="hk_id" name="hk_id" required>
+                    </div>
+                    <button type="submit" name="update_hk" class="btn btn-default" value="submit">Submit</button>
+                </form>
+            </div>
+            <div id="patdoc" class="tab-pane fade">
+                <h3>Pat-Doc</h3>
+                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
+                    <div class="form-group-sm">
+                        <label for="pat_id">Patient ID:</label>
+                        <input type="number" class="form-control" id="pat_id" name="pat_id" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="doc_id">Doctor ID:</label>
+                        <input type="number" class="form-control" id="doc_id" name="doc_id" required>
+                    </div>
+                    <button type="submit" name="update_pat_doc" class="btn btn-default" value="submit">Submit</button>
                 </form>
             </div>
         </div>
