@@ -47,6 +47,16 @@ if(isset($_POST["submit_emp"]))
                 setcookie($cookiename, $cookievalue, time() + (86400), "/");
                 header("location: doctor.php");
             }
+            if($emp_type=="RECEPTIONIST")
+            {
+                $query = "SELECT r_id FROM receptionist WHERE EMP_ID='".$uname."'";
+                $result = pg_query($db,$query);
+                $r_id = pg_fetch_result($result,0,0);
+                $cookiename = "r_id";
+                $cookievalue = $r_id;
+                setcookie($cookiename, $cookievalue, time() + (86400), "/");
+                header("location: rec_insert.php");
+            }
             
         }
         else
