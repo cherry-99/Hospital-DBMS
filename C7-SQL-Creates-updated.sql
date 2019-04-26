@@ -43,7 +43,7 @@ CREATE TABLE patient (
 	"pat_name" VARCHAR(30),
 	"gender" VARCHAR(7),
 	"date_of_birth" DATE,
-	"contact_no" bigint,
+	"contact_no" bigint UNIQUE,
 	"admit_date" DATE,
 	"diagnosis" VARCHAR(30),
 	"discharge_date" DATE

@@ -9,6 +9,130 @@ $errors1 = array();
 $emp_id = $_COOKIE["empid"];
 $r_id = $_COOKIE["r_id"];
 
+if(isset($_POST["insert_emp"]))
+{
+    $name=$_POST["name"];
+    $gender=$_POST["gender"];
+    $age = $_POST["age"];
+    $contact_no=$_POST["contact_no"];
+    $job_type=$_POST["job_type"];
+    $house_no = $_POST["house_no"];
+    $street = $_POST["street"];
+    $area =$_POST["area"];
+    $city =$_POST["city"];
+    $salary = $_POST["salary"];
+    $q="SELECT * FROM hospital_employee WHERE contact_no='".$contact_no."'";
+    $res=pg_query($db,$q);
+    $a=pg_fetch_assoc($res);
+    if($a)
+    {
+        echo '<script language="javascript">';
+        echo 'alert("Phone Number Already Registered with User")';
+        echo '</script>';
+    }
+    else
+    {
+        $insert_employee = "INSERT INTO hospital_employee(employee_name,gender,age,emp_type,salary,contact_no) 
+              VALUES ('".$name."','".$gender."','".$age."','".$job_type."','".$salary."','".$contact_no."')";
+        $result=pg_query($db,$insert_employee);
+        $job_type = pg_fetch_result(pg_query("SELECT emp_type FROM hospital_employee WHERE contact_no='".$contact_no."'"),0,0);
+        $query = "SELECT emp_id FROM hospital_employee WHERE contact_no='".$contact_no."'";
+        $result=pg_query($db,$query);
+        $emp_id=pg_fetch_result($result,0,0);
+        $query = "INSERT INTO emp_address VALUES ('".$house_no."','".$street."','".$area."','".$city."','".$emp_id."')";
+        $result = pg_query($db,$query);
+        if($job_type=="DOCTOR")
+        {
+            $query3 = "INSERT INTO employee_login VALUES ('".$emp_id."','".$emp_id."')";
+            $result3 = pg_query($db,$query3);
+            $query4 = "INSERT INTO doctor(emp_id) VALUES ('".$emp_id."')";
+            $result4 = pg_query($db,$query4);
+        }
+        if($job_type=="NURSE")
+        {
+            $query3 = "INSERT INTO employee_login VALUES ('".$emp_id."','".$emp_id."')";
+            $result3 = pg_query($db,$query3);
+            $query4 = "INSERT INTO nurse(emp_id) VALUES ('".$emp_id."')";
+            $result4 = pg_query($db,$query4);
+        }
+        if($job_type=="RECEPTIONIST")
+        {
+            $query3 = "INSERT INTO employee_login VALUES ('".$emp_id."','".$emp_id."')";
+            $result3 = pg_query($db,$query3);
+            $query4 = "INSERT INTO receptionist(emp_id) VALUES ('".$emp_id."')";
+            $result4 = pg_query($db,$query4);
+        }
+        if($job_type=="HOUSEKEEPING")
+        {
+            $query4 = "INSERT INTO hosekeeping(emp_id) VALUES ('".$emp_id."')";
+            $result4 = pg_query($db,$query4);
+        }
+    }
+}
+
+if(isset($_POST["insert_pat"]))
+{
+    $name=$_POST["name"];
+    $gender=$_POST["gender"];
+    $dob = $_POST["dob"];
+    $contact_no=$_POST["contact_no"];
+    $house_no = $_POST["house_no"];
+    $street = $_POST["street"];
+    $area =$_POST["area"];
+    $city =$_POST["city"];
+    $admit_date = $_POST["admit_date"];
+    $doc=$_POST["doc_id"];
+    $room=$_POST["room_id"];
+    $q="SELECT * FROM patient WHERE contact_no='".$contact_no."'";
+    $res=pg_query($db,$q);
+    $a=pg_fetch_assoc($res);
+    if($a)
+    {
+        echo '<script language="javascript">';
+        echo 'alert("Phone Number Already Registered with Patient")';
+        echo '</script>';
+    }
+    else
+    {
+        $insert_patient = "INSERT INTO patient(pat_name,gender,date_of_birth,contact_no,admit_date) VALUES ('".$name."','".$gender."','".$dob."','".$contact_no."','".$admit_date."')";
+        $result=pg_query($db,$insert_patient);
+        $query = "SELECT pat_id FROM patient WHERE contact_no='".$contact_no."'";
+        $result=pg_query($db,$query);
+        $pat_id=pg_fetch_result($result,0,0);
+        $query = "INSERT INTO emp_address VALUES ('".$house_no."','".$street."','".$area."','".$city."','".$pat_id."')";
+        $result = pg_query($db,$query);
+        $query3 = "INSERT INTO patient_login VALUES ('".$pat_id."','".$pat_id."')";
+        $result3 = pg_query($db,$query3);
+        $query3 = "INSERT INTO treats(doc_id,pat_id) VALUES ('".$doc."','".$pat_id."')";
+        $result3 = pg_query($db,$query3);
+        $query3 = "INSERT INTO room_assigned(room_no,pat_id) VALUES ('".$room."','".$pat_id."')";
+        $result3 = pg_query($db,$query3);
+        $query3 = "UPDATE rooms SET status="occ" WHERE room_no = $room";
+        $result3 = pg_query($db,$query3);
+    }
+}
+
+if(isset($_POST["insert_med_inv"]))
+{
+    $name=$_POST["name"];
+    $cost=$_POST["cost"];
+    $quantity = $_POST["quantity"];
+    $query = "SELECT * FROM medicine_inventory WHERE med_name='".$name."'";
+    $result=pg_query($db,$query);
+    $a=pg_fetch_assoc($result);
+    if($a)
+    {
+        echo '<script language="javascript">';
+        echo 'alert("Medicine already exists in inventory")';
+        echo '</script>';
+    }
+    else
+    {
+        $query = "INSERT INTO medicine_inventory(med_name,cost,quantity) VALUES ('".$name."','".$cost."','".$quantity."')";
+        $result=pg_query($db,$query);
+    }
+}
+
 if(isset($_POST["update_info"]))
 {
     $age = $_POST["age"];
@@ -211,10 +335,6 @@ $city = $answer[3];
                     <div class="form-group-sm">
                         <label for="admit_date">Admit Date:</label>
                         <input type="date" class="form-control" id="admit_date" name="admit_date" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="diag">Diagnosis:</label>
-                        <input type="text" class="form-control" id="diag" name="diag" required>
                     </div>
                     <div class="form-group-sm">
                         <label for="doc_id">Doctor Assigned(Doc ID):</label>
