@@ -6,7 +6,8 @@ $credentials = "user = postgres password=15739";
 
 $db = pg_connect("$host $port $dbname $credentials");
 $errors1 = array();
-// $pat_id = $_COOKIE['patid'];
+$emp_id = $_COOKIE["empid"];
+$r_id = $_COOKIE["r_id"];
 
 //We dont need the below part. It is for the patient to update his details. But the form is for the doctor to update the patient details
 // if(isset($_POST["update_info"]))
@@ -224,10 +225,6 @@ if(isset($_POST["update_info"]))
                     <div class="form-group-sm">
                         <label for="diag">Diagnosis:</label>
                         <input type="text" class="form-control" id="diag" name="diag" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="discharge_date">Discharge Date:</label>
-                        <input type="date" class="form-control" id="discharge_date" name="discharge_date" required>
                     </div>
                     <div class="form-group-sm">
                         <label for="doc_id">Doctor Assigned(Doc ID):</label>
