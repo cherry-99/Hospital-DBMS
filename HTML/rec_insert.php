@@ -6,18 +6,72 @@ $credentials = "user = postgres password=15739";
 
 $db = pg_connect("$host $port $dbname $credentials");
 $errors1 = array();
+$emp_id = $_COOKIE["empid"];
+$r_id = $_COOKIE["r_id"];
 
 if(isset($_POST["update_info"]))
 {
-    $pat_id = $_POST["pat_id"];
-    $diagnosis=$_POST["diag"];
-    $med_id = $_POST["med_id"];
-    $query = "UPDATE patient SET diagnosis = '".$diagnosis."' WHERE pat_id = $pat_id";
-    $query2 = "UPDATE medication SET med_id = '".$med_id."' WHERE pat_id = $pat_id";
+    $age = $_POST["age"];
+    $name=$_POST["name"];
+    $contact_no=$_POST["contact_no"];
+    $house_no = $_POST["house_no"];
+    $street = $_POST["street"];
+    $area =$_POST["area"];
+    $city =$_POST["city"];
+    $query = "UPDATE hospital_employee SET employee_name='".$name."',contact_no='".$contact_no."', age = '".$age."' WHERE emp_id = $emp_id";
     $result = pg_query($db,$query);
-    $result2 = pg_query($db,$query2);
+    $query = "UPDATE emp_address SET house_no='".$house_no."',street='".$street."', area = '".$area."',city = '".$city."' WHERE emp_id = $emp_id";
+    $result = pg_query($db,$query);
     header("location: rec_insert.php");
 }
+
+if(isset($_POST["update_password"]))
+{
+    $curr_psw=$_POST["curr_psw"];
+    $new_psw=$_POST["new_psw"];
+    $rep_psw=$_POST["rep_new_psw"];
+    $query = "SELECT password FROM EMPLOYEE_LOGIN WHERE emp_id = $emp_id";
+    $result = pg_query($db,$query);
+    $result_array = pg_fetch_assoc($result);
+    $check_psw = $result_array["password"];
+    if($rep_psw!=$new_psw)
+    {
+        echo '<script language="javascript">';
+        echo 'alert("Repeat Password does not match New password")';
+        echo '</script>';
+        array_push($errors1,"1");
+    }
+    if($curr_psw != $check_psw)
+    {
+        echo '<script language="javascript">';
+        echo 'alert("Current Password does not match")';
+        echo '</script>';
+        array_push($errors1,"0");
+    }
+    if(count($errors1)<=0)
+    {
+        $query="UPDATE employee_login SET password = '".$new_psw."' WHERE emp_id = $emp_id";
+        $result=pg_query($db,$query);
+        header("location: login.html");
+    }
+}
+
+$query = "SELECT employee_name , gender, age, emp_type, salary ,contact_no FROM hospital_employee WHERE emp_id = $emp_id";
+$result = pg_query($db,$query);
+$answer = pg_fetch_array($result);
+$name = $answer[0];
+$gender = $answer[1];
+$age = $answer[2];
+$emp_type = $answer[3];
+$salary = $answer[4];
+$ph_no = $answer[5];
+$query = "SELECT house_no , street, area, city FROM emp_address WHERE emp_id = $emp_id";
+$result = pg_query($db,$query);
+$answer = pg_fetch_array($result);
+$house_no = $answer[0];
+$street = $answer[1];
+$area = $answer[2];
+$city = $answer[3];
 
 ?>
 
@@ -195,6 +249,40 @@ if(isset($_POST["update_info"]))
                 </form>
             </div>
         </div>
+    </div>
+
+    <div id="info_form">
+        <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST" >
+            <div class="form-group-sm">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" value="<?php echo $name; ?>" required>
+            </div>
+            <div class="form-group-sm">
+                <label for="age">Age:</label>
+                <input type="number" class="form-control" id="age" name="age" value="<?php echo $age; ?>" required>
+            </div>
+            <div class="form-group-sm">
+                <label for="contact_no">Contact Number:</label>
+                <input type="number" class="form-control" id="contact_no" name="contact_no" value="<?php echo $ph_no; ?>" required>
+            </div>
+            <div class="form-group-sm">
+                <label for="house_no">House No:</label>
+                <input type="number" class="form-control" id="house_no" name="house_no" value="<?php echo $house_no; ?>" required>
+            </div>
+            <div class="form-group-sm">
+                <label for="street">Street:</label>
+                <input type="text" class="form-control" id="street" name="street" value="<?php echo $street; ?>" required>
+            </div>
+            <div class="form-group-sm">
+                <label for="area">Area:</label>
+                <input type="text" class="form-control" id="area" name="area" value="<?php echo $area; ?>" required>
+            </div>
+            <div class="form-group-sm">
+                <label for="city">City:</label>
+                <input type="text" class="form-control" id="city" name="city" value="<?php echo $city; ?>" required>
+            </div>
+            <button type="submit" name="update_info" class="btn btn-default" value="submit">Submit</button>
+        </form>
     </div>
 
     <div id="pass_form">
