@@ -123,3 +123,41 @@ UPDATE patient SET diagnosis='viral fever' WHERE pat_id=16;
 UPDATE patient SET diagnosis='hypothyroidism' WHERE pat_id=18;
 UPDATE patient SET diagnosis='viral fever' WHERE pat_id=11;
 UPDATE patient SET diagnosis='hyperglycemia' WHERE pat_id=14;
+
+-- insert pat_address
+INSERT INTO emp_address VALUES (5,'25th Floor Palton Road','Mohatta Market','Mumbai',1);
+INSERT INTO emp_address VALUES (25,'67 Mudalapalya','Nagarabhavi','Bangalore',2);
+INSERT INTO emp_address VALUES (13,'Lamington Road','Grant Road','Mumbai',3);
+INSERT INTO emp_address VALUES (45,'63th Flr Mittal Chambers', 'Nariman Point','Mumbai',4);
+INSERT INTO emp_address VALUES (43,'320 , Vice Regal', 'Old Padra Road','Mumbai',5);
+INSERT INTO emp_address VALUES (12,'Gr Flr, Dattpada Road', 'Borivali (east)','Mumbai',6);
+INSERT INTO emp_address VALUES (76,'K G Marg','Connaught Place','Delhi',7);
+INSERT INTO emp_address VALUES (26,'Ankit, Ambadi Rd','Vasai(w)','Mumbai',8);
+INSERT INTO emp_address VALUES (22,'Bara Imam Rd','Mandvi','Mumbai',9);
+INSERT INTO emp_address VALUES (96,'Bombay Samachar Marg','Hutatma Chowk','Mumbai',10);
+INSERT INTO emp_address VALUES (34,'Kusumkala Apt, Sai Baba Nagar', 'Borivali (west)','Mumbai',11);
+INSERT INTO emp_address VALUES (31,'Sandhya Nagar Society', 'Vishwamitri Road','Vadodara',12);
+INSERT INTO emp_address VALUES (61,'Satyam Bldg, Shiv Mandir Road', 'Ramnagar, Dombivli (east)','Mumbai',13);
+INSERT INTO emp_address VALUES (18,'Mithakali Six Road', 'Navrangpura','Ahmedabad',14);
+INSERT INTO emp_address VALUES (28,'Arun Bazar, S.v.road', 'Nr.bank Of India, Malad(w)','Mumbai',15);
+INSERT INTO emp_address VALUES (38,'5th Main Traveni', 'Yeshwanthpur','Bangalore',16);
+
+
+--  pat_address
+
+INSERT INTO pat_address VALUES (5,'25th Floor Palton Road','Mohatta Market','Mumbai',1);
+INSERT INTO pat_address VALUES (25,'67 Mudalapalya','Nagarabhavi','Bangalore',2);
+INSERT INTO pat_address VALUES (13,'Lamington Road','Grant Road','Mumbai',3);
+INSERT INTO pat_address VALUES (45,'63th Flr Mittal Chambers', 'Nariman Point','Mumbai',4);
+INSERT INTO pat_address VALUES (43,'320 , Vice Regal', 'Old Padra Road','Mumbai',5);
+INSERT INTO pat_address VALUES (12,'Gr Flr, Dattpada Road', 'Borivali (east)','Mumbai',6);
+INSERT INTO pat_address VALUES (76,'K G Marg','Connaught Place','Delhi',7);
+INSERT INTO pat_address VALUES (26,'Ankit, Ambadi Rd','Vasai(w)','Mumbai',8);
+INSERT INTO pat_address VALUES (22,'Bara Imam Rd','Mandvi','Mumbai',9);
+INSERT INTO pat_address VALUES (96,'Bombay Samachar Marg','Hutatma Chowk','Mumbai',10);
+INSERT INTO pat_address VALUES (34,'Kusumkala Apt, Sai Baba Nagar', 'Borivali (west)','Mumbai',11);
+INSERT INTO pat_address VALUES (31,'Sandhya Nagar Society', 'Vishwamitri Road','Vadodara',12);
+INSERT INTO pat_address VALUES (61,'Satyam Bldg, Shiv Mandir Road', 'Ramnagar, Dombivli (east)','Mumbai',13);
+INSERT INTO pat_address VALUES (18,'Mithakali Six Road', 'Navrangpura','Ahmedabad',14);
+INSERT INTO pat_address VALUES (28,'Arun Bazar, S.v.road', 'Nr.bank Of India, Malad(w)','Mumbai',15);
+INSERT INTO pat_address VALUES (38,'5th Main Traveni', 'Yeshwanthpur','Bangalore',16);
