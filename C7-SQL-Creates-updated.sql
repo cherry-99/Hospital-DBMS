@@ -57,8 +57,8 @@ CREATE TABLE patient_login(
 
 CREATE TABLE emp_address (
 	"house_no" INTEGER,
-	"street" VARCHAR(20),
-	"area" VARCHAR(40),
+	"street" VARCHAR(40),
+	"area" VARCHAR(30),
 	"city" VARCHAR(20),
 	"emp_id" INTEGER,
 	FOREIGN KEY ("emp_id") REFERENCES hospital_employee("emp_id") ON DELETE CASCADE
@@ -66,8 +66,8 @@ CREATE TABLE emp_address (
 
 CREATE TABLE pat_address (
 	"house_no" INTEGER,
-	"street" VARCHAR(20),
-	"area" VARCHAR(40),
+	"street" VARCHAR(40),
+	"area" VARCHAR(30),
 	"city" VARCHAR(20),
 	"pat_id" INTEGER,
 	FOREIGN KEY ("pat_id") REFERENCES patient("pat_id") ON DELETE CASCADE
