@@ -57,7 +57,13 @@ $ph_no = $answer[4];
 $admit_date = $answer[5];
 $diagnosis = $answer[6];
 $discharge_date = $answer[7];
-$address = $answer[8];
+$query = "SELECT house_no , street, area, city FROM pat_address WHERE pat_id = $pat_id";
+$result = pg_query($db,$query);
+$answer = pg_fetch_array($result);
+$house_no = $answer[1];
+$street = $answer[2];
+$area = $answer[3];
+$city = $answer[4];
 
 ?>
 
