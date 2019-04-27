@@ -7,6 +7,25 @@ $credentials = "user = postgres password=15739";
 $db = pg_connect("$host $port $dbname $credentials");
 $errors1 = array();
 
+$pat_id=$_COOKIE["u_pid"];
+$query = "SELECT * FROM patient WHERE pat_id = $pat_id";
+$result = pg_query($db,$query);
+$answer = pg_fetch_array($result);
+$name = $answer[1];
+$gender = $answer[2];
+$dob = $answer[3];
+$ph_no = $answer[4];
+$admit_date = $answer[5];
+$diagnosis = $answer[6];
+$discharge_date = $answer[7];
+$query = "SELECT house_no , street, area, city FROM pat_address WHERE pat_id = $pat_id";
+$result = pg_query($db,$query);
+$answer = pg_fetch_array($result);
+$house_no = $answer[0];
+$street = $answer[1];
+$area = $answer[2];
+$city = $answer[3];
+
 if(isset($_POST["update_pat"]))
 {
     $name=$_POST["name"];
@@ -19,9 +38,9 @@ if(isset($_POST["update_pat"]))
     $area=$_POST["area"];
     $city=$_POST["city"];
     $u_pid=$_COOKIE["u_pid"];
-    $query = "UPDATE patient SET pat_name='".$name."' gender='".$gender."' date_of_birth='".$dob."' contact_no='".$contact_no."' admit_date='".$admit_date."' WHERE pat_id=$u_pid"; 
+    $query = "UPDATE patient SET pat_name='".$name."' ,gender='".$gender."' ,date_of_birth='".$dob."', contact_no='".$contact_no."', admit_date='".$admit_date."' WHERE pat_id=$u_pid"; 
     $result = pg_query($db,$query);
-    $query = "UPDATE pat_address SET house_no='".$house_no."' street='".$street."' area='".$area."' city='".$city."' WHERE pat_id=$u_pid";
+    $query = "UPDATE pat_address SET house_no='".$house_no."', street='".$street."', area='".$area."', city='".$city."' WHERE pat_id=$u_pid";
     $result = pg_query($db,$query);
     unset($_COOKIE['u_pid']);
     header("location: rec_update.php");
@@ -271,6 +290,45 @@ if(isset($_POST["update_pat_doc"]))
             </div>
             <div id="pat" class="tab-pane fade in active">
                 <h3>Patient</h3>
+                <form class="form" action="/Hospital-DBMS/HTML/rec_update_pat.php" method="POST">
+                    <div class="form-group-sm">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" value="<?php echo $name; ?>" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <h5><b>Gender:</b></h5>
+                        <input type="text" class="form-control" id="gender" name="gender" value="<?php echo $gender; ?>" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="dob">Date of Birth:</label>
+                        <input type="date" class="form-control" id="dob" name="dob" value="<?php echo $dob; ?>" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="contact_no">Contact Number:</label>
+                        <input type="tel" class="form-control" id="contact_no" name="contact_no" value="<?php echo $ph_no; ?>" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="house_no">House No:</label>
+                        <input type="number" class="form-control" id="house_no" name="house_no" value="<?php echo $house_no; ?>" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="street">Street:</label>
+                        <input type="text" class="form-control" id="street" name="street" value="<?php echo $street; ?>" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="area">Area:</label>
+                        <input type="text" class="form-control" id="area" name="area" value="<?php echo $area; ?>" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="city">City:</label>
+                        <input type="text" class="form-control" id="city" name="city" value="<?php echo $city; ?>" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="admit_date">Admit Date:</label>
+                        <input type="date" class="form-control" id="admit_date" name="admit_date" value="<?php echo $admit_date; ?>" required>
+                    </div>
+                    <button type="submit" name="update_pat" class="btn btn-default" value="submit">Submit</button>
+                </form>
                 <?php 
                     $host = "host = localhost";
                     $port = "port = 5432";
@@ -296,48 +354,24 @@ if(isset($_POST["update_pat_doc"]))
                     }
                     echo "</tbody></table>";
                 ?>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_update_pat.php" method="POST">
-                    <div class="form-group-sm">
-                        <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <h5><b>Gender:</b></h5>
-                        <input type="text" class="form-control" id="gender" name="gender" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="dob">Date of Birth:</label>
-                        <input type="date" class="form-control" id="dob" name="dob" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="contact_no">Contact Number:</label>
-                        <input type="tel" class="form-control" id="contact_no" name="contact_no" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="house_no">House No:</label>
-                        <input type="number" class="form-control" id="house_no" name="house_no" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="street">Street:</label>
-                        <input type="text" class="form-control" id="street" name="street" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="area">Area:</label>
-                        <input type="text" class="form-control" id="area" name="area" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="city">City:</label>
-                        <input type="text" class="form-control" id="city" name="city" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="admit_date">Admit Date:</label>
-                        <input type="date" class="form-control" id="admit_date" name="admit_date" required>
-                    </div>
-                    <button type="submit" name="update_pat" class="btn btn-default" value="submit">Submit</button>
-                </form>
             </div>
             <div id="med_inv" class="tab-pane fade">
                 <h3>Medicine Inventory</h3>
+                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
+                    <div class="form-group-sm">
+                        <label for="name">Medicine Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="cost">Cost:</label>
+                        <input type="number" class="form-control" id="cost" name="cost" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" required>
+                    </div>
+                    <button type="submit" name="update_med_inv" class="btn btn-default" value="submit">Submit</button>
+                </form>
                 <?php 
                     $host = "host = localhost";
                     $port = "port = 5432";
@@ -360,21 +394,6 @@ if(isset($_POST["update_pat_doc"]))
                     }
                     echo "</tbody></table>";
                 ?>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
-                    <div class="form-group-sm">
-                        <label for="name">Medicine Name:</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="cost">Cost:</label>
-                        <input type="number" class="form-control" id="cost" name="cost" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="quantity">Quantity:</label>
-                        <input type="number" class="form-control" id="quantity" name="quantity" required>
-                    </div>
-                    <button type="submit" name="update_med_inv" class="btn btn-default" value="submit">Submit</button>
-                </form>
             </div>
             <div id="nur" class="tab-pane fade">
                 <h3>Nurse</h3>
