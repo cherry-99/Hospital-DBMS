@@ -7,16 +7,19 @@ $credentials = "user = postgres password=15739";
 $db = pg_connect("$host $port $dbname $credentials");
 $errors1 = array();
 
-if(isset($_POST["update_info"]))
+if(isset($_POST["remove_med_inv"]))
 {
-    $pat_id = $_POST["pat_id"];
-    $diagnosis=$_POST["diag"];
     $med_id = $_POST["med_id"];
-    $query = "UPDATE patient SET diagnosis = '".$diagnosis."' WHERE pat_id = $pat_id";
-    $query2 = "UPDATE medication SET med_id = '".$med_id."' WHERE pat_id = $pat_id";
-    $result = pg_query($db,$query);
-    $result2 = pg_query($db,$query2);
-    header("location: doctor.php");
+    // $diagnosis=$_POST["diag"];
+    // $med_id = $_POST["med_id"];
+    // $query = "UPDATE medicine_inventory SET diagnosis = '".$diagnosis."' WHERE med_id = $med_id";
+    // $query2 = "UPDATE medication SET med_id = '".$med_id."' WHERE med_id = $med_id";
+    // $result = pg_query($db,$query);
+    // $result2 = pg_query($db,$query2);
+    echo '<script language="javascript">';
+    echo 'alert("Medicine deleted")';
+    echo '</script>';
+    header("location: rec_delete.php");
 }
 
 ?>
@@ -74,7 +77,7 @@ if(isset($_POST["update_info"]))
         <div class="tab-content">
             <div id="emp" class="tab-pane fade in active">
                 <h3>Employee</h3>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
+                <form class="form" action="/Hospital-DBMS/HTML/rec_delete.php" method="POST" onsubmit="return confirm('Do you really want to remove this employee?');">
                     <div class="form-group-sm">
                         <label for="emp_id">Employee ID:</label>
                         <input type="number" class="form-control" id="emp_id" name="emp_id" required>
@@ -84,7 +87,7 @@ if(isset($_POST["update_info"]))
             </div>
             <div id="med_inv" class="tab-pane fade">
                 <h3>Medicine Inventory</h3>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
+                <form class="form" action="/Hospital-DBMS/HTML/rec_delete.php" method="POST" onsubmit="return confirm('Do you really want to remove this medicine?');">
                     <div class="form-group-sm">
                         <label for="med_id">Medicine ID:</label>
                         <input type="number" class="form-control" id="med_id" name="med_id" required>
