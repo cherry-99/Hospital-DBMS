@@ -11,7 +11,7 @@ if(isset($_POST["confirm_update_emp"]))
 {
     $emp_id=$_POST["emp_id"];
     $cookiename = "u_eid";
-    $cookievalue = $uname;
+    $cookievalue = $emp_id;
     setcookie($cookiename, $cookievalue, time() + (86400), "/");
     header("location: rec_update_emp.php");
 }
@@ -20,16 +20,16 @@ if(isset($_POST["confirm_update_pat"]))
 {
     $emp_id=$_POST["pat_id"];
     $cookiename = "u_pid";
-    $cookievalue = $uname;
+    $cookievalue = $emp_id;
     setcookie($cookiename, $cookievalue, time() + (86400), "/");
     header("location: rec_update_pat.php");
 }
 
 if(isset($_POST["confirm_update_med_inv"]))
 {
-    $emp_id=$_POST["emp_id"];
+    $emp_id=$_POST["med_id"];
     $cookiename = "u_mid";
-    $cookievalue = $uname;
+    $cookievalue = $emp_id;
     setcookie($cookiename, $cookievalue, time() + (86400), "/");
     header("location: rec_update_inv.php");
 }
@@ -257,6 +257,15 @@ if(isset($_POST["update_pat_doc"]))
         <div class="tab-content">
             <div id="emp" class="tab-pane fade in active">
                 <h3>Employee</h3>
+                
+                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
+                    <div class="form-group-sm">
+                        <label for="emp_id">Employee ID:</label>
+                        <input type="number" class="form-control" id="emp_id" name="emp_id" required>
+                    </div>
+                    <button type="submit" name="confirm_update_emp" class="btn btn-default" value="submit">Submit</button>
+                </form>
+
                 <?php 
                     $host = "host = localhost";
                     $port = "port = 5432";
@@ -282,16 +291,18 @@ if(isset($_POST["update_pat_doc"]))
                     }
                     echo "</tbody></table>";
                 ?>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
-                    <div class="form-group-sm">
-                        <label for="emp_id">Employee ID:</label>
-                        <input type="number" class="form-control" id="emp_id" name="emp_id" required>
-                    </div>
-                    <button type="submit" name="confirm_update_emp" class="btn btn-default" value="submit">Submit</button>
-                </form>
             </div>
             <div id="pat" class="tab-pane fade">
                 <h3>Patient</h3>
+                
+                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
+                    <div class="form-group-sm">
+                        <label for="pat_id">Patient ID:</label>
+                        <input type="number" class="form-control" id="pat_id" name="pat_id" required>
+                    </div>
+                    <button type="submit" name="confirm_update_pat" class="btn btn-default" value="submit">Submit</button>
+                </form>
+
                 <?php 
                     $host = "host = localhost";
                     $port = "port = 5432";
@@ -317,16 +328,18 @@ if(isset($_POST["update_pat_doc"]))
                     }
                     echo "</tbody></table>";
                 ?>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
-                    <div class="form-group-sm">
-                        <label for="pat_id">Patient ID:</label>
-                        <input type="number" class="form-control" id="pat_id" name="pat_id" required>
-                    </div>
-                    <button type="submit" name="confirm_update_pat" class="btn btn-default" value="submit">Submit</button>
-                </form>
             </div>
             <div id="med_inv" class="tab-pane fade">
                 <h3>Medicine Inventory</h3>
+                
+                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
+                    <div class="form-group-sm">
+                        <label for="med_id">Medicine ID:</label>
+                        <input type="number" class="form-control" id="med_id" name="med_id" required>
+                    </div>
+                    <button type="submit" name="confirm_update_med_inv" class="btn btn-default" value="submit">Submit</button>
+                </form>
+
                 <?php 
                     $host = "host = localhost";
                     $port = "port = 5432";
@@ -349,13 +362,6 @@ if(isset($_POST["update_pat_doc"]))
                     }
                     echo "</tbody></table>";
                 ?>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
-                    <div class="form-group-sm">
-                        <label for="med_id">Medicine ID:</label>
-                        <input type="number" class="form-control" id="med_id" name="med_id" required>
-                    </div>
-                    <button type="submit" name="confirm_update_med_inv" class="btn btn-default" value="submit">Submit</button>
-                </form>
             </div>
             <div id="nur" class="tab-pane fade">
                 <h3>Nurse</h3>
