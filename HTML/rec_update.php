@@ -19,6 +19,56 @@ if(isset($_POST["update_info"]))
     header("location: rec_update.php");
 }
 
+if(isset($_POST["update_emp"]))
+{
+    $name=$_POST["name"];
+    $gender=$_POST["gender"];
+    $age=$_POST["age"];
+    $contact_no=$_POST["contact_no"];
+    $salary=$_POST["salary"];
+    $house_no=$_POST["house_no"];
+    $street=$_POST["street"];
+    $area=$_POST["area"];
+    $city=$_POST["city"];
+    $u_eid=$_COOKIE["u_eid"];
+    $query = "UPDATE hospital_employee SET employee_name='".$name."' gender='".$gender."' age='".$age."' contact_no='".$contact_no."' salary='".$salary."' WHERE emp_id=$u_eid";
+    $result = pg_query($db,$query); 
+    $query = "UPDATE emp_address SET house_no='".$house_no."' street='".$street."' area='".$area."' city='".$city."' WHERE emp_id=$u_eid";
+    $result = pg_query($db,$query);
+    unset($_COOKIE['u_eid']);
+}
+
+if(isset($_POST["update_pat"]))
+{
+    $name=$_POST["name"];
+    $gender=$_POST["gender"];
+    $dob=$_POST["dob"];
+    $contact_no=$_POST["contact_no"];
+    $admit_date=$_POST["admit_date"];
+    $house_no=$_POST["house_no"];
+    $street=$_POST["street"];
+    $area=$_POST["area"];
+    $city=$_POST["city"];
+    $u_pid=$_COOKIE["u_pid"];
+    $query = "UPDATE patient SET pat_name='".$name."' gender='".$gender."' date_of_birth='".$dob."' contact_no='".$contact_no."' admit_date='".$admit_date."' WHERE pat_id=$u_pid"; 
+    $result = pg_query($db,$query);
+    $query = "UPDATE pat_address SET house_no='".$house_no."' street='".$street."' area='".$area."' city='".$city."' WHERE pat_id=$u_pid";
+    $result = pg_query($db,$query);
+    unset($_COOKIE['u_pid']);
+}
+
+if(isset($_POST["update_med_inv"]))
+{
+    $name=$_POST["name"];
+    $cost=$_POST["cost"];
+    $quantity=$_POST["quantity"];
+    $med_id=$_COOKIE["u_mid"];
+    $query = "UPDATE medicine_inventory SET med_name='".$name."' cost='".$cost."' quantity='".$quantity."' WHERE med_id=$u_mid"; 
+    $result = pg_query($db,$query);
+    unset($_COOKIE['u_pid']);
+}
+
+
 if(isset($_POST["update_nur"]))
 {
     $room=$_POST["room_id"];
@@ -209,10 +259,6 @@ if(isset($_POST["update_pat_doc"]))
                         <input type="tel" class="form-control" id="contact_no" name="contact_no" required>
                     </div>
                     <div class="form-group-sm">
-                        <label for="job_type">Job Type:</label>
-                        <input type="text" class="form-control" id="job_type" name="job_type" required>
-                    </div>
-                    <div class="form-group-sm">
                         <label for="house_no">House No:</label>
                         <input type="number" class="form-control" id="house_no" name="house_no" required>
                     </div>
@@ -273,21 +319,6 @@ if(isset($_POST["update_pat_doc"]))
                     <div class="form-group-sm">
                         <label for="admit_date">Admit Date:</label>
                         <input type="date" class="form-control" id="admit_date" name="admit_date" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="diag">Diagnosis:</label>
-                        <input type="text" class="form-control" id="diag" name="diag" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="discharge_date">Discharge Date:</label>
-                        <input type="date" class="form-control" id="discharge_date" name="discharge_date" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="doc_id">Doctor Assigned(Doc ID):</label>
-                        <input type="number" class="form-control" id="doc_id" name="doc_id" required>
-                    </div><div class="form-group-sm">
-                        <label for="room_id">Room Assigned(Room ID):</label>
-                        <input type="number" class="form-control" id="room_id" name="room_id" required>
                     </div>
                     <button type="submit" name="update_pat" class="btn btn-default" value="submit">Submit</button>
                 </form>
