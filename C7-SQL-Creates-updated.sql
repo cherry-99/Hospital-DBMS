@@ -86,8 +86,7 @@ CREATE TABLE bill (
 
 CREATE TABLE records (
 	"patient_name" VARCHAR(30),
-	"pat_id" serial PRIMARY KEY,
-	"doc_name" VARCHAR(30),
+	"pat_id" INTEGER PRIMARY KEY,
 	"diagnosis" VARCHAR(30),
 	"admit_date" DATE,
 	"discharge_date" DATE,

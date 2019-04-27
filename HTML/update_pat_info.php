@@ -16,12 +16,22 @@ if(isset($_POST["update_info"]))
     $diagnosis=$_POST["diag"];
     $med_id = $_POST["med_id"];
     $query = "UPDATE patient SET diagnosis = '".$diagnosis."' WHERE pat_id = $pat_id";
-    $query2 = "INSERT INTO medication(med_id,pat_id) VALUES ('".$med_id."','".$pat_id."')";
     $result = pg_query($db,$query);
-    $result2 = pg_query($db,$query2);
+    $query = "SELECT * FROM medication where pat_id=$pat_id";
+    $result = pg_query($db,$query);
+    $a=pg_fetch_assoc($result);
+    if($a)
+    {
+        $query = "UPDATE medication SET med_id = '".$med_id."' WHERE pat_id = $pat_id";
+        $result = pg_query($db,$query);
+    }
+    else
+    {
+        $query2 = "INSERT INTO medication(med_id,pat_id) VALUES ('".$med_id."','".$pat_id."')";
+        $result2 = pg_query($db,$query2);
+    }
     header("location: update_pat_info.php");
 }
-//FIXXXXXXXXX THISSSSSSSSSSSSSSS
 //this is for updating the discharge date of the patient and creating records and bills
 if(isset($_POST["discharge_pat"]))
 {
@@ -31,20 +41,19 @@ if(isset($_POST["discharge_pat"]))
     $result = pg_query($db,$query);
     // create a bill
     $admit_date = pg_fetch_result(pg_query("SELECT admit_date from patient where pat_id=$pat_id"),0,0);
-    echo $admit_date;
     $query="INSERT INTO bill (pat_id,bill_date,med_fee,room_fee,hosp_charges,tax,total)
             SELECT patient.pat_id, patient.discharge_date, medicine_inventory.cost, rooms.cost, (medicine_inventory.cost+rooms.cost)*0.25, (medicine_inventory.cost+rooms.cost)*0.18, (medicine_inventory.cost+rooms.cost)*1.25*1.18
-            FROM patient, rooms, medicine_inventory
-            WHERE patient.pat_id=$pat_id AND
-                  rooms.room_no=(SELECT room_no FROM room_assigned WHERE pat_id=$pat_id) AND
+            FROM patient, rooms, medicine_inventory,medication
+            WHERE patient.pat_id=$pat_id AND rooms.room_no=(SELECT room_no FROM room_assigned WHERE pat_id=$pat_id) AND
                   medicine_inventory.med_id=(SELECT med_id FROM medication WHERE pat_id=$pat_id);";
     $result = pg_query($db,$query);
-    $bill_id = pg_fetch_result(pg_query("SELECT bill_id FROM bill WHERE pat_id=$pat_id"),0,0);
-    $query2="INSERT INTO records (patient_name,pat_id,doc_id,diagnosis,admit_date,discharge_date,medication,bill_id)
-            SELECT patient.pat_id, doctor.doc_id,patoent.diagnosis, patient.admit_date,patient.discharge_date, patient.medication,
-            FROM patient, rooms, medicine_inventory
-            WHERE patient.pat_id=$pat_id AND
-                  rooms.room_no=(SELECT room_no FROM room_assigned WHERE pat_id=$pat_id);";
+    $query2="INSERT INTO records (patient_name,pat_id,diagnosis,admit_date,discharge_date,bill_id)
+            SELECT patient.name,patient.pat_id,patient.diagnosis, patient.admit_date,patient.discharge_date,bill.bill_id
+            FROM patient, doctor,bill,hospital_employee,treats
+            WHERE patient.pat_id=$pat_id AND bill.pat_id=$pat_id;";
+    $result = pg_query($db,$query);
+    $query3 = "delete from patient where pat_id=$pat_id";
+    $result = pg_query($db,$query3);
 }
 ?>
 
