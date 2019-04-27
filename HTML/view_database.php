@@ -6,19 +6,6 @@ $credentials = "user = postgres password=15739";
 
 $db = pg_connect("$host $port $dbname $credentials");
 $errors1 = array();
-
-if(isset($_POST["update_info"]))
-{
-    $pat_id = $_POST["pat_id"];
-    $diagnosis=$_POST["diag"];
-    $med_id = $_POST["med_id"];
-    $query = "UPDATE patient SET diagnosis = '".$diagnosis."' WHERE pat_id = $pat_id";
-    $query2 = "UPDATE medication SET med_id = '".$med_id."' WHERE pat_id = $pat_id";
-    $result = pg_query($db,$query);
-    $result2 = pg_query($db,$query2);
-    header("location: doctor.php");
-}
-
 ?>
 
 <!DOCTYPE html>
