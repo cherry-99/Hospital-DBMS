@@ -19,6 +19,112 @@ if(isset($_POST["update_info"]))
     header("location: rec_update.php");
 }
 
+if(isset($_POST["update_nur"]))
+{
+    $room=$_POST["room_id"];
+    $nurse_id=$_POST["nurse_id"];
+    $query = "SELECT * FROM room_incharge WHERE room_no='".$room."';";
+    $result=pg_query($db,$query);
+    $answer = $pg_fetch_assoc($result);
+    $query = "SELECT * FROM nurse WHERE nurse_id='".$nurse_id."';";
+    $result = pg_query($db,$query);
+    $ans = pg_fetch_assoc($result);
+    if($answer && $ans)
+    {
+        $query = "UPDATE room_incharge SET nurse_id='".$nurse_id."' WHERE room_no='".$room."'";
+
+    }
+    else if($ans)
+    {
+        echo '<script language="javascript">';
+        echo 'alert("Room Not Found")';
+        echo '</script>';
+    }
+    elseif($nswer)
+    {
+        echo '<script language="javascript">';
+        echo 'alert("Nurse Not Found")';
+        echo '</script>';
+    }
+    else
+    {
+        echo '<script language="javascript">';
+        echo 'alert("Room Not Found and Nurse not found")';
+        echo '</script>';
+    }
+}
+
+if(isset($_POST["update_hk"]))
+{
+    $room=$_POST["room_id"];
+    $hk_id=$_POST["hk_id"];
+    $query = "SELECT * FROM room_incharge WHERE room_no='".$room."';";
+    $result=pg_query($db,$query);
+    $answer = $pg_fetch_assoc($result);
+    $query = "SELECT * FROM housekeeping WHERE h_id='".$hk_id."';";
+    $result = pg_query($db,$query);
+    $ans = pg_fetch_assoc($result);
+    if($answer && $ans)
+    {
+        $query = "UPDATE room_incharge SET h_id='".$hk_id."' WHERE room_no='".$room."'";
+
+    }
+    else if($ans)
+    {
+        echo '<script language="javascript">';
+        echo 'alert("Room Not Found")';
+        echo '</script>';
+    }
+    elseif($nswer)
+    {
+        echo '<script language="javascript">';
+        echo 'alert("Housekeeper Not Found")';
+        echo '</script>';
+    }
+    else
+    {
+        echo '<script language="javascript">';
+        echo 'alert("Room Not Found and housekeeping employee not found")';
+        echo '</script>';
+    }
+}
+
+if(isset($_POST["update_pat_doc"]))
+{
+    $pat_id=$_POST["pat_id"];
+    $doc_id=$_POST["doc_id"];
+    $query = "SELECT * FROM treats WHERE pat_id='".$pat_id."';";
+    $result=pg_query($db,$query);
+    $answer = $pg_fetch_assoc($result);
+    $query = "SELECT * FROM doctor WHERE doc_id='".$doc_id."';";
+    $result = pg_query($db,$query);
+    $ans = pg_fetch_assoc($result);
+    if($answer && $ans)
+    {
+        $query = "UPDATE treats SET doc_id='".$doc_id."' WHERE pat_id='".$pat_id."'";
+
+    }
+    elseif($answer)
+    {
+        echo '<script language="javascript">';
+        echo 'alert("Doctor Not Found")';
+        echo '</script>';
+    }
+    elseif($ans)
+    {
+        echo '<script language="javascript">';
+        echo 'alert("Patient Not Found")';
+        echo '</script>';
+    }
+    else
+    {
+        echo '<script language="javascript">';
+        echo 'alert("Patient Not Found and Doctor not Found")';
+        echo '</script>';
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
