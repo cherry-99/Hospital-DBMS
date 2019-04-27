@@ -67,27 +67,101 @@ if(isset($_POST["update_info"]))
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#emp">Employee</a></li>
             <li><a data-toggle="tab" href="#pat">Patient</a></li>
-            <li><a data-toggle="tab" href="#place2">Placeholder2</a></li>
-            <li><a data-toggle="tab" href="#place3">Placeholder3</a></li>
-            <li><a data-toggle="tab" href="#place4">Placeholder4</a></li>
+            <li><a data-toggle="tab" href="#place2">Records</a></li>
+            <li><a data-toggle="tab" href="#place3">Bills</a></li>
+            <li><a data-toggle="tab" href="#place4">Employee Stats</a></li>
             <li><a data-toggle="tab" href="#place5">Placeholder5</a></li>
         </ul>
         <div class="tab-content">
             <div id="emp" class="tab-pane fade in active">
                 <h3>Employee</h3>
-                
+                <?php 
+                    $host = "host = localhost";
+                    $port = "port = 5432";
+                    $dbname = "dbname = test";
+                    $credentials = "user = postgres password=15739";
+                    $db = pg_connect("$host $port $dbname $credentials");
+                    $query="SELECT * FROM HOSPITAL_EMPLOYEE";
+                    $result = pg_query($db,$query);
+                    echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+                    echo "<thead><tr><th>EMPLOYEE_ID</th><th>EMPLOYEE_NAME</th><th>GENDER</th><th>AGE</th><th>EMP_TYPE</th><th>SALARY</th><th>CONTACT_NO</th></tr></thead><tbody>";
+                    // loop through results of database query, displaying them in the table
+                    while($row = pg_fetch_array( $result )) 
+                    {
+                            // echo out the contents of each row into a table
+                            echo "<tr>";
+                            echo '<td>' . $row['emp_id'] . '</td>';
+                            echo '<td>' . $row['employee_name'] . '</td>';
+                            echo '<td>' . $row['gender'] . '</td>';
+                            echo '<td>' . $row['age'] . '</td>';
+                            echo '<td>' . $row['emp_type'] . '</td>';
+                            echo '<td>' . $row['salary'] . '</td>';
+                            echo '<td>' . $row['contact_no'] . '</td>'.'</tr>';
+                    }
+                    echo "</tbody></table>";
+                ?>
             </div>
             <div id="pat" class="tab-pane fade">
                 <h3>Patient</h3>
+                <?php 
+                    $host = "host = localhost";
+                    $port = "port = 5432";
+                    $dbname = "dbname = test";
+                    $credentials = "user = postgres password=15739";
+                    $db = pg_connect("$host $port $dbname $credentials");
+                    $query="SELECT * FROM PATIENT";
+                    $result = pg_query($db,$query);
+                    echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+                    echo "<thead><tr><th>PATIENT_ID</th><th>PATIENT_NAME</th><th>GENDER</th><th>DATE_OF_BIRTH</th><th>CONTACT NO</th><th>ADMIT DATE</th><th>DIAGNOSIS</th></tr></thead><tbody>";
+                    // loop through results of database query, displaying them in the table
+                    while($row = pg_fetch_array( $result )) 
+                    {
+                            // echo out the contents of each row into a table
+                            echo "<tr>";
+                            echo '<td>' . $row['pat_id'] . '</td>';
+                            echo '<td>' . $row['pat_name'] . '</td>';
+                            echo '<td>' . $row['gender'] . '</td>';
+                            echo '<td>' . $row['date_of_birth'] . '</td>';
+                            echo '<td>' . $row['contact_no'] . '</td>';
+                            echo '<td>' . $row['admit_date'] . '</td>';
+                            echo '<td>' . $row['diagnosis'] . '</td>'.'</tr>';
+                    }
+                    echo "</tbody></table>";
+                ?>
             </div>
             <div id="place2" class="tab-pane fade">
-                <h3>Placeholder2</h3>
+                <h3>Records</h3>
+                <?php 
+                    $host = "host = localhost";
+                    $port = "port = 5432";
+                    $dbname = "dbname = test";
+                    $credentials = "user = postgres password=15739";
+                    $db = pg_connect("$host $port $dbname $credentials");
+                    $query="SELECT * FROM RECORDS";
+                    $result = pg_query($db,$query);
+                    echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+                    echo "<thead><tr><th>PATIENT_ID</th><th>PATIENT_NAME</th><th>DOCTOR NAME</th><th>DIAGNOSO</th><th>CONTACT NO</th><th>ADMIT DATE</th><th>DISCHARGE DATE</th><th>BILL ID</th></tr></thead><tbody>";
+                    // loop through results of database query, displaying them in the table
+                    while($row = pg_fetch_array( $result )) 
+                    {
+                            // echo out the contents of each row into a table
+                            echo "<tr>";
+                            echo '<td>' . $row['pat_id'] . '</td>';
+                            echo '<td>' . $row['patient_name'] . '</td>';
+                            echo '<td>' . $row['doc_name'] . '</td>';
+                            echo '<td>' . $row['diagnosis'] . '</td>';
+                            echo '<td>' . $row['admit_date'] . '</td>';
+                            echo '<td>' . $row['discharge_date'] . '</td>';
+                            echo '<td>' . $row['bill_id'] . '</td>'.'</tr>';
+                    }
+                    echo "</tbody></table>";
+                ?>
             </div>
             <div id="place3" class="tab-pane fade">
-                <h3>Placeholder3</h3>
+                <h3>Bills</h3>
             </div>
             <div id="place4" class="tab-pane fade">
-                <h3>Placeholder4</h3>
+                <h3>Employee Stats</h3>
             </div>
             <div id="place5" class="tab-pane fade">
                 <h3>Placeholder5</h3>

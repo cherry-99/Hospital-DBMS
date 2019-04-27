@@ -88,11 +88,10 @@ CREATE TABLE bill (
 CREATE TABLE records (
 	"patient_name" VARCHAR(30),
 	"pat_id" serial PRIMARY KEY,
-	"doc_id" INTEGER,
+	"doc_name" VARCHAR(30),
 	"diagnosis" VARCHAR(30),
 	"admit_date" DATE,
 	"discharge_date" DATE,
-	"medication" VARCHAR(30),
 	"bill_id" INTEGER,
 	FOREIGN KEY ("bill_id") REFERENCES bill("bill_id") ON DELETE CASCADE
 );
