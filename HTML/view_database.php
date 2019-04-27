@@ -47,7 +47,7 @@ if(isset($_POST["update_info"]))
                 <li><a href="rec_insert.php">Add</a></li>
                 <li><a href="rec_update.php">Change</a></li>
                 <li><a href="rec_delete.php">Remove</a></li>
-                <li class="active"><a href="view_database.php">View DB</a></li>
+                <li class="active"><a href="view_database.php">View DataBase</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -70,7 +70,6 @@ if(isset($_POST["update_info"]))
             <li><a data-toggle="tab" href="#place2">Records</a></li>
             <li><a data-toggle="tab" href="#place3">Bills</a></li>
             <li><a data-toggle="tab" href="#place4">Employee Stats</a></li>
-            <li><a data-toggle="tab" href="#place5">Placeholder5</a></li>
         </ul>
         <div class="tab-content">
             <div id="emp" class="tab-pane fade in active">
@@ -159,13 +158,76 @@ if(isset($_POST["update_info"]))
             </div>
             <div id="place3" class="tab-pane fade">
                 <h3>Bills</h3>
+                <?php 
+                    $host = "host = localhost";
+                    $port = "port = 5432";
+                    $dbname = "dbname = test";
+                    $credentials = "user = postgres password=15739";
+                    $db = pg_connect("$host $port $dbname $credentials");
+                    $query="SELECT * FROM BILL";
+                    $result = pg_query($db,$query);
+                    echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+                    echo "<thead><tr><th>BILL_ID</th><th>PATIENT_ID</th><th>BILL DATE</th><th>MEDICINE FEES</th><th>ROOM FEES</th><th>HOSPITAL CHARGES</th><th>TAX</th><th>TOTAL</th></tr></thead><tbody>";
+                    // loop through results of database query, displaying them in the table
+                    while($row = pg_fetch_array( $result )) 
+                    {
+                            // echo out the contents of each row into a table
+                            echo "<tr>";
+                            echo '<td>' . $row['bill_id'] . '</td>';
+                            echo '<td>' . $row['pat_id'] . '</td>';
+                            echo '<td>' . $row['bill_date'] . '</td>';
+                            echo '<td>' . $row['med_fee'] . '</td>';
+                            echo '<td>' . $row['room_fee'] . '</td>';
+                            echo '<td>' . $row['hosp_charges'] . '</td>';
+                            echo '<td>' . $row['tax'] . '</td>';
+                            echo '<td>' . $row['total'] . '</td>'.'</tr>';
+                    }
+                    echo "</tbody></table>";
+                ?>
             </div>
             <div id="place4" class="tab-pane fade">
                 <h3>Employee Stats</h3>
-            </div>
-            <div id="place5" class="tab-pane fade">
-                <h3>Placeholder5</h3>
-                
+                <?php 
+                    $host = "host = localhost";
+                    $port = "port = 5432";
+                    $dbname = "dbname = test";
+                    $credentials = "user = postgres password=15739";
+                    $db = pg_connect("$host $port $dbname $credentials");
+                    $query="SELECT emp_type,COUNT(*),avg(salary),min(salary),max(salary),sum(salary) FROM hospital_employee GROUP BY emp_type;";
+                    $result = pg_query($db,$query);
+                    echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+                    echo "<thead><tr><th>EMPLOYMENT TYPE</th><th>NO OF EMPLOYEES</th><th>AVERAGE SALARY</th><th>MINIMUM SALARY</th><th>MAXIMUM SALARY</th><th>TOTAL AMOUNT PAID TO DEPARTMENT</th></tr></thead><tbody>";
+                    // loop through results of database query, displaying them in the table
+                    while($row = pg_fetch_array( $result )) 
+                    {
+                            // echo out the contents of each row into a table
+                            echo "<tr>";
+                            echo '<td>' . $row['emp_type'] . '</td>';
+                            echo '<td>' . $row['count'] . '</td>';
+                            echo '<td>' . $row['avg'] . '</td>';
+                            echo '<td>' . $row['min'] . '</td>';
+                            echo '<td>' . $row['max'] . '</td>';
+                            echo '<td>' . $row['sum'] . '</td>'.'</tr>';
+                    }
+                    echo "</tbody></table>";
+                    echo "</br> EMPLOYEES EARNING MORE THAN 50000";
+                    $query="SELECT emp_id,employee_name,emp_type,salary FROM hospital_employee GROUP BY emp_id HAVING salary >= 50000;";
+                    $result = pg_query($db,$query);
+                    echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+                    echo "<thead><tr><th>EMPLOYEE ID</th><th>EMPLOYEE NAME</th><th>EMPLOYMENT TYPE</th><th>SALARY</th></tr></thead><tbody>";
+                    // loop through results of database query, displaying them in the table
+                    while($row = pg_fetch_array( $result )) 
+                    {
+                            // echo out the contents of each row into a table
+                            echo "<tr>";
+                            echo '<td>' . $row['emp_id'] . '</td>';
+                            echo '<td>' . $row['employee_name'] . '</td>';
+                            echo '<td>' . $row['emp_type'] . '</td>';
+                            echo '<td>' . $row['salary'] . '</td>'.'</tr>';
+                    }
+                    echo "</tbody></table>";
+                ?>
+
             </div>
         </div>
     </div>
