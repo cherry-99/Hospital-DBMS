@@ -16,7 +16,7 @@ if(isset($_POST["remove_emp"]))
     if($ans)
     {
         $emp_type=pg_fetch_result(pg_query("SELECT emp_type FROM HOSPITAL_EMPLOYEE WHERE emp_id='".$emp_id."';"),0,0);
-        $query = "DELETE FROM HOSPITAL_EMPLOYEE WHERE emp_id='".$emp_id."';";
+        $query = "DELETE FROM HOSPITAL_EMPLOYEE WHERE emp_id=$emp_id;";
         $result = pg_query($db,$query);
         if($emp_type=="DOCTOR")
         {
@@ -24,10 +24,10 @@ if(isset($_POST["remove_emp"]))
             echo 'alert("PLEASE UPDATE THE PATIENT DOCTOR DATA UNDER CHANGE PAT_DOC TABS")';
             echo '</script>';
         }
-        if($emp_type=="NURSE")
+        if($emp_type=="NURSE" || $emp_type=="HOUSEKEEPING")
         {
             echo '<script language="javascript">';
-            echo 'alert("PLEASE UPDATE THE ROOM INCHARGE IN NURSE TAB UNDER THE CHANGE TAB")';
+            echo 'alert("PLEASE UPDATE THE ROOM INCHARGE IN NURSE/HOUSEKEEPING TAB UNDER THE CHANGE TAB")';
             echo '</script>';
         }
     }
@@ -54,7 +54,7 @@ if(isset($_POST["remove_med_inv"]))
     {
         echo '<script language="javascript">';
         echo 'alert("MEDICINE NOT FOUND IN DATABASE")';
-        echo '</script>'
+        echo '</script>';
     }
 }
 ?>
@@ -134,7 +134,6 @@ if(isset($_POST["remove_med_inv"]))
                     }
                     echo "</tbody></table>";
                 ?>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
                 <form class="form" action="/Hospital-DBMS/HTML/rec_delete.php" method="POST" onsubmit="return confirm('Do you really want to remove this employee?');">
                     <div class="form-group-sm">
                         <label for="emp_id">Employee ID:</label>
@@ -168,13 +167,6 @@ if(isset($_POST["remove_med_inv"]))
                 echo "</tbody></table>";
                 ?>
                 <form class="form" action="/Hospital-DBMS/HTML/rec_delete.php" method="POST" onsubmit="return confirm('Do you really want to remove this medicine?');">
-                    <div class="form-group-sm">
-                        <label for="med_id">Medicine ID:</label>
-                        <input type="number" class="form-control" id="med_id" name="med_id" required>
-                    </div>
-                    <button type="submit" name="remove_med_inv" class="btn btn-default" value="submit">Submit</button>
-                </form>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
                     <div class="form-group-sm">
                         <label for="med_id">Medicine ID:</label>
                         <input type="number" class="form-control" id="med_id" name="med_id" required>
