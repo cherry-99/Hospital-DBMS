@@ -126,7 +126,7 @@ $errors1 = array();
                     $query="SELECT * FROM RECORDS";
                     $result = pg_query($db,$query);
                     echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
-                    echo "<thead><tr><th>PATIENT_ID</th><th>PATIENT_NAME</th><th>DOCTOR NAME</th><th>DIAGNOSO</th><th>CONTACT NO</th><th>ADMIT DATE</th><th>DISCHARGE DATE</th><th>BILL ID</th></tr></thead><tbody>";
+                    echo "<thead><tr><th>PATIENT_ID</th><th>PATIENT_NAME</th><th>DIAGNOSIS</th><th>ADMIT DATE</th><th>DISCHARGE DATE</th><th>BILL ID</th></tr></thead><tbody>";
                     // loop through results of database query, displaying them in the table
                     while($row = pg_fetch_array( $result )) 
                     {
@@ -134,7 +134,6 @@ $errors1 = array();
                             echo "<tr>";
                             echo '<td>' . $row['pat_id'] . '</td>';
                             echo '<td>' . $row['patient_name'] . '</td>';
-                            echo '<td>' . $row['doc_name'] . '</td>';
                             echo '<td>' . $row['diagnosis'] . '</td>';
                             echo '<td>' . $row['admit_date'] . '</td>';
                             echo '<td>' . $row['discharge_date'] . '</td>';

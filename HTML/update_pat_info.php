@@ -41,16 +41,17 @@ if(isset($_POST["discharge_pat"]))
     $result = pg_query($db,$query);
     // create a bill
     $admit_date = pg_fetch_result(pg_query("SELECT admit_date from patient where pat_id=$pat_id"),0,0);
+    $med_fee=pg_fetch_result(pg_query("SELECT cost FROM medicine_inventory WHERE med_id=(SELECT med_id FROM medication WHERE pat_id=$pat_id)"),0,0);
+    $room_fee=pg_fetch_result(pg_query("SELECT cost FROM rooms WHERE room_no=(SELECT room_no from room_assigned where pat_id=$pat_id)"),0,0);
     $query="INSERT INTO bill (pat_id,bill_date,med_fee,room_fee,hosp_charges,tax,total)
-            SELECT patient.pat_id, patient.discharge_date, medicine_inventory.cost, rooms.cost, (medicine_inventory.cost+rooms.cost)*0.25, (medicine_inventory.cost+rooms.cost)*0.18, (medicine_inventory.cost+rooms.cost)*1.25*1.18
-            FROM patient, rooms, medicine_inventory,medication
-            WHERE patient.pat_id=$pat_id AND rooms.room_no=(SELECT room_no FROM room_assigned WHERE pat_id=$pat_id) AND
-                  medicine_inventory.med_id=(SELECT med_id FROM medication WHERE pat_id=$pat_id);";
+            SELECT patient.pat_id, patient.discharge_date, $med_fee, $room_fee, ($med_fee+$room_fee)*0.25, ($med_fee+$room_fee)*0.18, ($med_fee+$room_fee)*1.25*1.18
+            FROM patient WHERE patient.pat_id=$pat_id;";
     $result = pg_query($db,$query);
-    $query2="INSERT INTO records (patient_name,pat_id,diagnosis,admit_date,discharge_date,bill_id)
-            SELECT patient.name,patient.pat_id,patient.diagnosis, patient.admit_date,patient.discharge_date,bill.bill_id
-            FROM patient, doctor,bill,hospital_employee,treats
-            WHERE patient.pat_id=$pat_id AND bill.pat_id=$pat_id;";
+    $bill_id = pg_fetch_result(pg_query("SELECT bill_id FROM bill WHERE pat_id=$pat_id" ),0,0);
+    $query="INSERT INTO records (patient_name,pat_id,diagnosis,admit_date,discharge_date,bill_id)
+            SELECT patient.pat_name,patient.pat_id,patient.diagnosis, patient.admit_date,patient.discharge_date,$bill_id
+            FROM patient
+            WHERE patient.pat_id=$pat_id;";
     $result = pg_query($db,$query);
     $query3 = "delete from patient where pat_id=$pat_id";
     $result = pg_query($db,$query3);
