@@ -47,7 +47,7 @@ if(isset($_POST["update_info"]))
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <ul class="nav navbar-nav">
-                <li><a href="rec_insert.php">Add</a></li>
+                <li onclick="rec_forms(1)"><a href="#">Add</a></li>
                 <li><a href="rec_update.php">Change</a></li>
                 <li class="active"><a href="rec_delete.php">Remove</a></li>
                 <li><a href="view_database.php">View DB</a></li>
@@ -57,8 +57,8 @@ if(isset($_POST["update_info"]))
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
                             class="glyphicon glyphicon-user"></span> Account <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li onclick="doctor_forms(2)"><a href="doctor.php">Update Information</a></li>
-                        <li onclick="doctor_forms(3)"><a href="doctor.php">Change Password</a></li>
+                        <li onclick="rec_forms(2)"><a href="#">Update Information</a></li>
+                        <li onclick="rec_forms(3)"><a href="#">Change Password</a></li>
                         <li><a href="login.html">Log Out</a></li>
                     </ul>
                 </li>
@@ -69,292 +69,50 @@ if(isset($_POST["update_info"]))
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#emp">Employee</a></li>
-            <li><a data-toggle="tab" href="#pat">Patient</a></li>
-            <li><a data-toggle="tab" href="#place2">Placeholder2</a></li>
-            <li><a data-toggle="tab" href="#place3">Placeholder3</a></li>
-            <li><a data-toggle="tab" href="#place4">Placeholder4</a></li>
-            <li><a data-toggle="tab" href="#place5">Placeholder5</a></li>
+            <li><a data-toggle="tab" href="#med_inv">Medicine Inventory</a></li>
         </ul>
         <div class="tab-content">
             <div id="emp" class="tab-pane fade in active">
                 <h3>Employee</h3>
                 <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
                     <div class="form-group-sm">
-                        <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <label for="emp_id">Employee ID:</label>
+                        <input type="number" class="form-control" id="emp_id" name="emp_id" required>
                     </div>
-                    <div class="form-group-sm">
-                        <h5><b>Gender:</b></h5>
-                        <input type="text" class="form-control" id="gender" name="gender" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="age">Age:</label>
-                        <input type="number" class="form-control" id="age" name="age" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="contact_no">Contact Number:</label>
-                        <input type="tel" class="form-control" id="contact_no" name="contact_no" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="job_type">Job Type:</label>
-                        <input type="text" class="form-control" id="job_type" name="job_type" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="house_no">House No:</label>
-                        <input type="number" class="form-control" id="house_no" name="house_no" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="street">Street:</label>
-                        <input type="text" class="form-control" id="street" name="street" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="area">Area:</label>
-                        <input type="text" class="form-control" id="area" name="area" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="city">City:</label>
-                        <input type="text" class="form-control" id="city" name="city" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="salary">Salary:</label>
-                        <input type="number" class="form-control" id="salary" name="salary" required>
-                    </div>
-                    <button type="submit" name="insert_emp" class="btn btn-default" value="submit">Submit</button>
+                    <button type="submit" name="remove_emp" class="btn btn-default" value="submit">Submit</button>
                 </form>
             </div>
-            <div id="pat" class="tab-pane fade">
-                <h3>Patient</h3>
+            <div id="med_inv" class="tab-pane fade">
+                <h3>Medicine Inventory</h3>
                 <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
                     <div class="form-group-sm">
-                        <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <label for="med_id">Medicine ID:</label>
+                        <input type="number" class="form-control" id="med_id" name="med_id" required>
                     </div>
-                    <div class="form-group-sm">
-                        <h5><b>Gender:</b></h5>
-                        <input type="text" class="form-control" id="gender" name="gender" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="dob">Date of Birth:</label>
-                        <input type="date" class="form-control" id="dob" name="dob" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="contact_no">Contact Number:</label>
-                        <input type="tel" class="form-control" id="contact_no" name="contact_no" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="house_no">House No:</label>
-                        <input type="number" class="form-control" id="house_no" name="house_no" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="street">Street:</label>
-                        <input type="text" class="form-control" id="street" name="street" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="area">Area:</label>
-                        <input type="text" class="form-control" id="area" name="area" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="city">City:</label>
-                        <input type="text" class="form-control" id="city" name="city" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="admit_date">Admit Date:</label>
-                        <input type="date" class="form-control" id="admit_date" name="admit_date" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="diag">Diagnosis:</label>
-                        <input type="text" class="form-control" id="diag" name="diag" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="discharge_date">Discharge Date:</label>
-                        <input type="date" class="form-control" id="discharge_date" name="discharge_date" required>
-                    </div>
-                    <button type="submit" name="insert_pat" class="btn btn-default" value="submit">Submit</button>
+                    <button type="submit" name="remove_med_inv" class="btn btn-default" value="submit">Submit</button>
                 </form>
-            </div>
-            <div id="place2" class="tab-pane fade">
-                <h3>Placeholder2</h3>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
-                    <div class="form-group-sm">
-                        <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <h5><b>Gender:</b></h5>
-                        <input type="text" class="form-control" id="gender" name="gender" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="age">Age:</label>
-                        <input type="number" class="form-control" id="age" name="age" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="contact_no">Contact Number:</label>
-                        <input type="tel" class="form-control" id="contact_no" name="contact_no" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="job_type">Job Type:</label>
-                        <input type="text" class="form-control" id="job_type" name="job_type" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="house_no">House No:</label>
-                        <input type="number" class="form-control" id="house_no" name="house_no" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="street">Street:</label>
-                        <input type="text" class="form-control" id="street" name="street" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="area">Area:</label>
-                        <input type="text" class="form-control" id="area" name="area" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="city">City:</label>
-                        <input type="text" class="form-control" id="city" name="city" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="salary">Salary:</label>
-                        <input type="text" class="form-control" id="salary" name="salary" required>
-                    </div>
-                    <button type="submit" name="insert_emp" class="btn btn-default" value="submit">Submit</button>
-                </form>
-            </div>
-            <div id="place3" class="tab-pane fade">
-                <h3>Placeholder3</h3>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
-                    <div class="form-group-sm">
-                        <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <h5><b>Gender:</b></h5>
-                        <input type="text" class="form-control" id="gender" name="gender" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="age">Age:</label>
-                        <input type="number" class="form-control" id="age" name="age" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="contact_no">Contact Number:</label>
-                        <input type="tel" class="form-control" id="contact_no" name="contact_no" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="job_type">Job Type:</label>
-                        <input type="text" class="form-control" id="job_type" name="job_type" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="house_no">House No:</label>
-                        <input type="number" class="form-control" id="house_no" name="house_no" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="street">Street:</label>
-                        <input type="text" class="form-control" id="street" name="street" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="area">Area:</label>
-                        <input type="text" class="form-control" id="area" name="area" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="city">City:</label>
-                        <input type="text" class="form-control" id="city" name="city" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="salary">Salary:</label>
-                        <input type="text" class="form-control" id="salary" name="salary" required>
-                    </div>
-                    <button type="submit" name="insert_emp" class="btn btn-default" value="submit">Submit</button>
-                </form>
-            </div>
-            <div id="place4" class="tab-pane fade">
-                <h3>Placeholder4</h3>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
-                    <div class="form-group-sm">
-                        <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <h5><b>Gender:</b></h5>
-                        <input type="text" class="form-control" id="gender" name="gender" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="age">Age:</label>
-                        <input type="number" class="form-control" id="age" name="age" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="contact_no">Contact Number:</label>
-                        <input type="tel" class="form-control" id="contact_no" name="contact_no" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="job_type">Job Type:</label>
-                        <input type="text" class="form-control" id="job_type" name="job_type" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="house_no">House No:</label>
-                        <input type="number" class="form-control" id="house_no" name="house_no" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="street">Street:</label>
-                        <input type="text" class="form-control" id="street" name="street" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="area">Area:</label>
-                        <input type="text" class="form-control" id="area" name="area" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="city">City:</label>
-                        <input type="text" class="form-control" id="city" name="city" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="salary">Salary:</label>
-                        <input type="text" class="form-control" id="salary" name="salary" required>
-                    </div>
-                    <button type="submit" name="insert_emp" class="btn btn-default" value="submit">Submit</button>
-                </form>
-            </div>
-            <div id="place5" class="tab-pane fade">
-                <h3>Placeholder5</h3>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
-                    <div class="form-group-sm">
-                        <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <h5><b>Gender:</b></h5>
-                        <input type="text" class="form-control" id="gender" name="gender" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="age">Age:</label>
-                        <input type="number" class="form-control" id="age" name="age" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="contact_no">Contact Number:</label>
-                        <input type="tel" class="form-control" id="contact_no" name="contact_no" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="job_type">Job Type:</label>
-                        <input type="text" class="form-control" id="job_type" name="job_type" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="house_no">House No:</label>
-                        <input type="number" class="form-control" id="house_no" name="house_no" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="street">Street:</label>
-                        <input type="text" class="form-control" id="street" name="street" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="area">Area:</label>
-                        <input type="text" class="form-control" id="area" name="area" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="city">City:</label>
-                        <input type="text" class="form-control" id="city" name="city" required>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="salary">Salary:</label>
-                        <input type="text" class="form-control" id="salary" name="salary" required>
-                    </div>
-                    <button type="submit" name="insert_emp" class="btn btn-default" value="submit">Submit</button>
-                </form>
+                <?php 
+                $host = "host = localhost";
+                $port = "port = 5432";
+                $dbname = "dbname = test";
+                $credentials = "user = postgres password=15739";
+                $db = pg_connect("$host $port $dbname $credentials");
+                $query = "SELECT * FROM medicine_inventory";
+                $result = pg_query($db,$query);
+                echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+                echo "<thead><tr><th>Medicine ID</th><th>Medicine Name</th> <th> Quantity </th> <th> Cost </th> </tr></thead><tbody>";
+                // loop through results of database query, displaying them in the table
+                while($row = pg_fetch_array( $result )) 
+                {
+                        // echo out the contents of each row into a table
+                        echo "<tr>";
+                        echo '<td>' . $row['med_id'] . '</td>';
+                        echo '<td>' . $row['med_name'] . '</td>';
+                        echo '<td>' . $row['quantity'] . '</td>';
+                        echo '<td>' . $row['cost'] . '</td>'.'</tr>';
+                }
+                echo "</tbody></table>";
+            ?>
             </div>
         </div>
     </div>
