@@ -197,7 +197,7 @@ $errors1 = array();
                             echo '<td>' . $row['sum'] . '</td>'.'</tr>';
                     }
                     echo "</tbody></table>";
-                    echo "</br> EMPLOYEES EARNING MORE THAN 50000";
+                    echo "</br> <h3>EMPLOYEES EARNING MORE THAN 50000</h3>";
                     $query="SELECT emp_id,employee_name,emp_type,salary FROM hospital_employee GROUP BY emp_id HAVING salary >= 50000;";
                     $result = pg_query($db,$query);
                     echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';

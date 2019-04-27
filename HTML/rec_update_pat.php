@@ -222,24 +222,17 @@ if(isset($_POST["update_pat_doc"]))
         </div>
     </nav>
 
-    <?php  if (count($errors1) > 0) : ?>
-    <div class="error">
-        <?php foreach ($errors1 as $error) : ?>
-        <p><?php echo $error ?></p>
-        <?php endforeach ?>
-    </div>
-    <?php  endif ?>
     <div class="container">
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#emp">Employee</a></li>
-            <li><a data-toggle="tab" href="#pat">Patient</a></li>
+            <li><a data-toggle="tab" href="#emp">Employee</a></li>
+            <li class="active"><a data-toggle="tab" href="#pat">Patient</a></li>
             <li><a data-toggle="tab" href="#med_inv">Medicine Inventory</a></li>
             <li><a data-toggle="tab" href="#nur">Nurse</a></li>
             <li><a data-toggle="tab" href="#house_keep">Housekeeping</a></li>
             <li><a data-toggle="tab" href="#patdoc">Pat-Doc</a></li>
         </ul>
         <div class="tab-content">
-            <div id="emp" class="tab-pane fade in active">
+            <div id="emp" class="tab-pane fade">
                 <h3>Employee</h3>
                 <?php 
                     $host = "host = localhost";
@@ -268,13 +261,45 @@ if(isset($_POST["update_pat_doc"]))
                 ?>
                 <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
                     <div class="form-group-sm">
-                        <label for="emp_id">Employee ID:</label>
-                        <input type="number" class="form-control" id="emp_id" name="emp_id" required>
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
                     </div>
-                    <button type="submit" name="confirm_update_emp" class="btn btn-default" value="submit">Submit</button>
+                    <div class="form-group-sm">
+                        <h5><b>Gender:</b></h5>
+                        <input type="text" class="form-control" id="gender" name="gender" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="age">Age:</label>
+                        <input type="number" class="form-control" id="age" name="age" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="contact_no">Contact Number:</label>
+                        <input type="tel" class="form-control" id="contact_no" name="contact_no" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="house_no">House No:</label>
+                        <input type="number" class="form-control" id="house_no" name="house_no" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="street">Street:</label>
+                        <input type="text" class="form-control" id="street" name="street" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="area">Area:</label>
+                        <input type="text" class="form-control" id="area" name="area" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="city">City:</label>
+                        <input type="text" class="form-control" id="city" name="city" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="salary">Salary:</label>
+                        <input type="number" class="form-control" id="salary" name="salary" required>
+                    </div>
+                    <button type="submit" name="update_emp" class="btn btn-default" value="submit">Submit</button>
                 </form>
             </div>
-            <div id="pat" class="tab-pane fade">
+            <div id="pat" class="tab-pane fade in active">
                 <h3>Patient</h3>
                 <?php 
                     $host = "host = localhost";
@@ -301,12 +326,44 @@ if(isset($_POST["update_pat_doc"]))
                     }
                     echo "</tbody></table>";
                 ?>
-                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
+                <form class="form" action="/Hospital-DBMS/HTML/rec_update_pat.php" method="POST">
                     <div class="form-group-sm">
-                        <label for="pat_id">Patient ID:</label>
-                        <input type="number" class="form-control" id="pat_id" name="pat_id" required>
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
                     </div>
-                    <button type="submit" name="confirm_update_pat" class="btn btn-default" value="submit">Submit</button>
+                    <div class="form-group-sm">
+                        <h5><b>Gender:</b></h5>
+                        <input type="text" class="form-control" id="gender" name="gender" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="dob">Date of Birth:</label>
+                        <input type="date" class="form-control" id="dob" name="dob" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="contact_no">Contact Number:</label>
+                        <input type="tel" class="form-control" id="contact_no" name="contact_no" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="house_no">House No:</label>
+                        <input type="number" class="form-control" id="house_no" name="house_no" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="street">Street:</label>
+                        <input type="text" class="form-control" id="street" name="street" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="area">Area:</label>
+                        <input type="text" class="form-control" id="area" name="area" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="city">City:</label>
+                        <input type="text" class="form-control" id="city" name="city" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="admit_date">Admit Date:</label>
+                        <input type="date" class="form-control" id="admit_date" name="admit_date" required>
+                    </div>
+                    <button type="submit" name="update_pat" class="btn btn-default" value="submit">Submit</button>
                 </form>
             </div>
             <div id="med_inv" class="tab-pane fade">
@@ -335,10 +392,18 @@ if(isset($_POST["update_pat_doc"]))
                 ?>
                 <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
                     <div class="form-group-sm">
-                        <label for="med_id">Medicine ID:</label>
-                        <input type="number" class="form-control" id="med_id" name="med_id" required>
+                        <label for="name">Medicine Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
                     </div>
-                    <button type="submit" name="confirm_update_med_inv" class="btn btn-default" value="submit">Submit</button>
+                    <div class="form-group-sm">
+                        <label for="cost">Cost:</label>
+                        <input type="number" class="form-control" id="cost" name="cost" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" required>
+                    </div>
+                    <button type="submit" name="update_med_inv" class="btn btn-default" value="submit">Submit</button>
                 </form>
             </div>
             <div id="nur" class="tab-pane fade">

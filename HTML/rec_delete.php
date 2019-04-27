@@ -56,6 +56,7 @@ if(isset($_POST["remove_med_inv"]))
         echo 'alert("MEDICINE NOT FOUND IN DATABASE")';
         echo '</script>'
     }
+}
 ?>
 
 <!DOCTYPE html>
@@ -134,6 +135,7 @@ if(isset($_POST["remove_med_inv"]))
                     echo "</tbody></table>";
                 ?>
                 <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
+                <form class="form" action="/Hospital-DBMS/HTML/rec_delete.php" method="POST" onsubmit="return confirm('Do you really want to remove this employee?');">
                     <div class="form-group-sm">
                         <label for="emp_id">Employee ID:</label>
                         <input type="number" class="form-control" id="emp_id" name="emp_id" required>
@@ -165,6 +167,13 @@ if(isset($_POST["remove_med_inv"]))
                 }
                 echo "</tbody></table>";
                 ?>
+                <form class="form" action="/Hospital-DBMS/HTML/rec_delete.php" method="POST" onsubmit="return confirm('Do you really want to remove this medicine?');">
+                    <div class="form-group-sm">
+                        <label for="med_id">Medicine ID:</label>
+                        <input type="number" class="form-control" id="med_id" name="med_id" required>
+                    </div>
+                    <button type="submit" name="remove_med_inv" class="btn btn-default" value="submit">Submit</button>
+                </form>
                 <form class="form" action="/Hospital-DBMS/HTML/rec_insert.php" method="POST">
                     <div class="form-group-sm">
                         <label for="med_id">Medicine ID:</label>
