@@ -10,28 +10,65 @@ $errors1 = array();
 if(isset($_POST["confirm_update_emp"]))
 {
     $emp_id=$_POST["emp_id"];
-    $cookiename = "u_eid";
-    $cookievalue = $emp_id;
-    setcookie($cookiename, $cookievalue, time() + (86400), "/");
-    header("location: rec_update_emp.php");
+    $query = "SELECT * FROM hospital_employee WHERE emp_id='".$emp_id."';";
+    $result = pg_query($db,$query);
+    $ans = pg_fetch_assoc($result);
+    if($ans)
+    {
+        $cookiename = "u_eid";
+        $cookievalue = $emp_id;
+        setcookie($cookiename, $cookievalue, time() + (86400), "/");
+        header("location: rec_update_emp.php");
+    }
+    else
+    {
+        echo '<script language="javascript">';
+        echo 'alert("EMPLOYEE Not Found")';
+        echo '</script>';
+    }
+    
 }
 
 if(isset($_POST["confirm_update_pat"]))
 {
     $emp_id=$_POST["pat_id"];
-    $cookiename = "u_pid";
-    $cookievalue = $emp_id;
-    setcookie($cookiename, $cookievalue, time() + (86400), "/");
-    header("location: rec_update_pat.php");
+    $query = "SELECT * FROM patient WHERE pat_id='".$emp_id."';";
+    $result = pg_query($db,$query);
+    $ans = pg_fetch_assoc($result);
+    if($ans)
+    {
+        $cookiename = "u_pid";
+        $cookievalue = $emp_id;
+        setcookie($cookiename, $cookievalue, time() + (86400), "/");
+        header("location: rec_update_pat.php");
+    }
+    else
+    {
+        echo '<script language="javascript">';
+        echo 'alert("PATIENT Not Found")';
+        echo '</script>';
+    } 
 }
 
 if(isset($_POST["confirm_update_med_inv"]))
 {
     $emp_id=$_POST["med_id"];
-    $cookiename = "u_mid";
-    $cookievalue = $emp_id;
-    setcookie($cookiename, $cookievalue, time() + (86400), "/");
-    header("location: rec_update_inv.php");
+    $query = "SELECT * FROM MEDICINE_INVENTORY WHERE med_id='".$emp_id."';";
+    $result = pg_query($db,$query);
+    $ans = pg_fetch_assoc($result);
+    if($ans)
+    {
+        $cookiename = "u_mid";
+        $cookievalue = $emp_id;
+        setcookie($cookiename, $cookievalue, time() + (86400), "/");
+        header("location: rec_update_inv.php");
+    }
+    else
+    {
+        echo '<script language="javascript">';
+        echo 'alert("MEDICINE Not Found")';
+        echo '</script>';
+    }
 }
 
 
@@ -376,6 +413,32 @@ if(isset($_POST["update_pat_doc"]))
                     </div>
                     <button type="submit" name="update_nur" class="btn btn-default" value="submit">Submit</button>
                 </form>
+                <?php 
+                    $host = "host = localhost";
+                    $port = "port = 5432";
+                    $dbname = "dbname = test";
+                    $credentials = "user = postgres password=15739";
+                    $db = pg_connect("$host $port $dbname $credentials");
+                    $query="CREATE VIEW nurse_rooms AS SELECT room_incharge.room_no,room_incharge.nurse_id,hospital_employee.employee_name FROM room_incharge LEFT OUTER JOIN nurse ON room_incharge.nurse_id=nurse.nurse_id LEFT OUTER JOIN hospital_employee ON nurse.emp_id=hospital_employee.emp_id ORDER BY room_incharge.nurse_id";
+                    $result = pg_query($db,$query);
+                    $query = "SELECT * FROM nurse_rooms";
+                    $result = pg_query($db,$query);
+                    echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+                    echo "<thead><tr><th>ROOM NO</th><th>NURSE ID</th> <th>NAME</th> </tr></thead><tbody>";
+                    // loop through results of database query, displaying them in the table
+                    while($row = pg_fetch_array( $result )) 
+                    {
+                            // echo out the contents of each row into a table
+                            echo "<tr>";
+                            echo '<td>' . $row['room_no'] . '</td>';
+                            echo '<td>' . $row['nurse_id'] . '</td>';
+                            echo '<td>' . $row['employee_name'] . '</td>'.'</tr>';
+                    }
+                    echo "</tbody></table>";
+                    $query="DROP VIEW nurse_rooms";
+                    $result=pg_query($db,$query);
+                ?>
+
             </div>
             <div id="house_keep" class="tab-pane fade">
                 <h3>Housekeeping</h3>
