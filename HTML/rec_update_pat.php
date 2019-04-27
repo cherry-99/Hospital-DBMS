@@ -7,37 +7,6 @@ $credentials = "user = postgres password=15739";
 $db = pg_connect("$host $port $dbname $credentials");
 $errors1 = array();
 
-if(isset($_POST["update_info"]))
-{
-    $pat_id = $_POST["pat_id"];
-    $diagnosis=$_POST["diag"];
-    $med_id = $_POST["med_id"];
-    $query = "UPDATE patient SET diagnosis = '".$diagnosis."' WHERE pat_id = $pat_id";
-    $query2 = "UPDATE medication SET med_id = '".$med_id."' WHERE pat_id = $pat_id";
-    $result = pg_query($db,$query);
-    $result2 = pg_query($db,$query2);
-    header("location: rec_update.php");
-}
-
-if(isset($_POST["update_emp"]))
-{
-    $name=$_POST["name"];
-    $gender=$_POST["gender"];
-    $age=$_POST["age"];
-    $contact_no=$_POST["contact_no"];
-    $salary=$_POST["salary"];
-    $house_no=$_POST["house_no"];
-    $street=$_POST["street"];
-    $area=$_POST["area"];
-    $city=$_POST["city"];
-    $u_eid=$_COOKIE["u_eid"];
-    $query = "UPDATE hospital_employee SET employee_name='".$name."' gender='".$gender."' age='".$age."' contact_no='".$contact_no."' salary='".$salary."' WHERE emp_id=$u_eid";
-    $result = pg_query($db,$query); 
-    $query = "UPDATE emp_address SET house_no='".$house_no."' street='".$street."' area='".$area."' city='".$city."' WHERE emp_id=$u_eid";
-    $result = pg_query($db,$query);
-    unset($_COOKIE['u_eid']);
-}
-
 if(isset($_POST["update_pat"]))
 {
     $name=$_POST["name"];
@@ -55,6 +24,7 @@ if(isset($_POST["update_pat"]))
     $query = "UPDATE pat_address SET house_no='".$house_no."' street='".$street."' area='".$area."' city='".$city."' WHERE pat_id=$u_pid";
     $result = pg_query($db,$query);
     unset($_COOKIE['u_pid']);
+    header("location: rec_update.php");
 }
 
 if(isset($_POST["update_med_inv"]))

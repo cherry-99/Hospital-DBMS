@@ -7,17 +7,33 @@ $credentials = "user = postgres password=15739";
 $db = pg_connect("$host $port $dbname $credentials");
 $errors1 = array();
 
-if(isset($_POST["update_info"]))
+if(isset($_POST["confirm_update_emp"]))
 {
-    $pat_id = $_POST["pat_id"];
-    $diagnosis=$_POST["diag"];
-    $med_id = $_POST["med_id"];
-    $query = "UPDATE patient SET diagnosis = '".$diagnosis."' WHERE pat_id = $pat_id";
-    $query2 = "UPDATE medication SET med_id = '".$med_id."' WHERE pat_id = $pat_id";
-    $result = pg_query($db,$query);
-    $result2 = pg_query($db,$query2);
-    header("location: rec_update.php");
+    $emp_id=$_POST["emp_id"];
+    $cookiename = "u_eid";
+    $cookievalue = $uname;
+    setcookie($cookiename, $cookievalue, time() + (86400), "/");
+    header("location: rec_update_emp.php");
 }
+
+if(isset($_POST["confirm_update_pat"]))
+{
+    $emp_id=$_POST["pat_id"];
+    $cookiename = "u_pid";
+    $cookievalue = $uname;
+    setcookie($cookiename, $cookievalue, time() + (86400), "/");
+    header("location: rec_update_pat.php");
+}
+
+if(isset($_POST["confirm_update_med_inv"]))
+{
+    $emp_id=$_POST["emp_id"];
+    $cookiename = "u_mid";
+    $cookievalue = $uname;
+    setcookie($cookiename, $cookievalue, time() + (86400), "/");
+    header("location: rec_update_inv.php");
+}
+
 
 if(isset($_POST["update_emp"]))
 {
