@@ -107,7 +107,7 @@ if(isset($_POST["insert_pat"]))
         $result3 = pg_query($db,$query3);
         $query3 = "INSERT INTO room_assigned(room_no,pat_id) VALUES ('".$room."','".$pat_id."')";
         $result3 = pg_query($db,$query3);
-        $query3 = "UPDATE rooms SET status="occ" WHERE room_no = $room";
+        $query3 = "UPDATE rooms SET status='occ' WHERE room_no = $room";
         $result3 = pg_query($db,$query3);
     }
 }
@@ -345,6 +345,51 @@ $city = $answer[3];
                     </div>
                     <button type="submit" name="insert_pat" class="btn btn-default" value="submit">Submit</button>
                 </form>
+                <?php
+                        echo "ALL DOCTORS";
+                        $query="SELECT doctor.doc_id,hospital_employee.employee_name FROM doctor inner join hospital_employee on doctor.emp_id=hospital_employee.emp_id ORDER BY doctor.doc_id;";
+                        $result = pg_query($db,$query);
+                        echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+                        echo "<thead><tr><th>doctor ID</th><th>Doctor Name</th> </tr></thead><tbody>";
+                        while($row = pg_fetch_array( $result )) 
+                        {
+                            // echo out the contents of each row into a table
+                            echo "<tr>";
+                            echo '<td>' . $row['doc_id'] . '</td>';
+                            echo '<td>' . $row['employee_name'] . '</td>'.'</tr>';
+                        }
+                        echo "</tbody></table>";
+                ?>
+                <?php
+                        echo "Number of patients treated by doctors";
+                        $query="SELECT doctor.doc_id , count(*) FROM doctor inner join treats on treats.doc_id=doctor.doc_id GROUP BY doctor.doc_id ORDER BY doctor.doc_id;";
+                        $result = pg_query($db,$query);
+                        echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+                        echo "<thead><tr><th>doctor ID</th><th>Number of patients handeled</th> </tr></thead><tbody>";
+                        while($row = pg_fetch_array( $result )) 
+                        {
+                            // echo out the contents of each row into a table
+                            echo "<tr>";
+                            echo '<td>' . $row['doc_id'] . '</td>';
+                            echo '<td>' . $row['count'] . '</td>'.'</tr>';
+                        }
+                        echo "</tbody></table>";
+                ?>
+                <?php
+                        $query="SELECT room_no,room_type FROM rooms where status='unocc';";
+                        $result = pg_query($db,$query);
+                        echo "AVALABLE ROOMS/UNOCCUPIED ROOMS";
+                        echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+                        echo "<thead><tr><th>Room Number</th><th>Room Type</th> </tr></thead><tbody>";
+                        while($row = pg_fetch_array( $result )) 
+                        {
+                            // echo out the contents of each row into a table
+                            echo "<tr>";
+                            echo '<td>' . $row['room_no'] . '</td>';
+                            echo '<td>' . $row['room_type'] . '</td>'.'</tr>';
+                        }
+                        echo "</tbody></table>";
+                ?>
             </div>
             <div id="med_inv" class="tab-pane fade">
                 <h3>Medicine Inventory</h3>
@@ -363,6 +408,28 @@ $city = $answer[3];
                     </div>
                     <button type="submit" name="insert_med_inv" class="btn btn-default" value="submit">Submit</button>
                 </form>
+                <?php 
+                $host = "host = localhost";
+                $port = "port = 5432";
+                $dbname = "dbname = test";
+                $credentials = "user = postgres password=15739";
+                $db = pg_connect("$host $port $dbname $credentials");
+                $query = "SELECT * FROM medicine_inventory";
+                $result = pg_query($db,$query);
+                echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+                echo "<thead><tr><th>Medicine ID</th><th>Medicine Name</th> <th> Quantity </th> <th> Cost </th> </tr></thead><tbody>";
+                // loop through results of database query, displaying them in the table
+                while($row = pg_fetch_array( $result )) 
+                {
+                        // echo out the contents of each row into a table
+                        echo "<tr>";
+                        echo '<td>' . $row['med_id'] . '</td>';
+                        echo '<td>' . $row['med_name'] . '</td>';
+                        echo '<td>' . $row['quantity'] . '</td>';
+                        echo '<td>' . $row['cost'] . '</td>'.'</tr>';
+                }
+                echo "</tbody></table>";
+            ?>
             </div>
         </div>
     </div>
