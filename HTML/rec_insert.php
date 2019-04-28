@@ -67,6 +67,9 @@ if(isset($_POST["insert_emp"]))
             $query4 = "INSERT INTO hosekeeping(emp_id) VALUES ('".$emp_id."')";
             $result4 = pg_query($db,$query4);
         }
+        echo '<script language="javascript">';
+        echo 'alert(" '.$emp_id.' is the employee id and default password.")';
+        echo '</script>';
     }
 }
 
@@ -109,6 +112,9 @@ if(isset($_POST["insert_pat"]))
         $result3 = pg_query($db,$query3);
         $query3 = "UPDATE rooms SET status='occ' WHERE room_no = $room";
         $result3 = pg_query($db,$query3);
+        echo '<script language="javascript">';
+        echo 'alert(" '.$pat_id.' is the employee id and default password.")';
+        echo '</script>';
     }
 }
 

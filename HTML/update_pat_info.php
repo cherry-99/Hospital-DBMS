@@ -47,6 +47,7 @@ if(isset($_POST["discharge_pat"]))
             SELECT patient.pat_id, patient.discharge_date, $med_fee, $room_fee, ($med_fee+$room_fee)*0.25, ($med_fee+$room_fee)*0.18, ($med_fee+$room_fee)*1.25*1.18
             FROM patient WHERE patient.pat_id=$pat_id;";
     $result = pg_query($db,$query);
+    $result = pg_query("UPDATE rooms SET status='unocc' WHERE room_no=(SELECT room_no from room_assigned where pat_id=$pat_id)");
     $bill_id = pg_fetch_result(pg_query("SELECT bill_id FROM bill WHERE pat_id=$pat_id" ),0,0);
     $query="INSERT INTO records (patient_name,pat_id,diagnosis,admit_date,discharge_date,bill_id)
             SELECT patient.pat_name,patient.pat_id,patient.diagnosis, patient.admit_date,patient.discharge_date,$bill_id

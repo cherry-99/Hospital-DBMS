@@ -64,12 +64,12 @@ INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
 INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
 INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
 INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
-INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
-INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
-INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
-INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
-INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
-INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
+INSERT INTO rooms(cost,room_type) VALUES(2500, 'ICU');
+INSERT INTO rooms(cost,room_type) VALUES(2500, 'ICU');
+INSERT INTO rooms(cost,room_type) VALUES(2500, 'ICU');
+INSERT INTO rooms(cost,room_type) VALUES(2500, 'ICU');
+INSERT INTO rooms(cost,room_type) VALUES(2500, 'ICU');
+INSERT INTO rooms(cost,room_type) VALUES(2500, 'ICU');
 INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
 INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
 INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
@@ -80,10 +80,10 @@ INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
 INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
 INSERT INTO rooms(cost,room_type) VALUES(2500, 'Ward');
 INSERT INTO rooms(cost,room_type) VALUES(8500, 'ICU');
+INSERT INTO rooms(cost,room_type) VALUES(8500, 'Ward');
 INSERT INTO rooms(cost,room_type) VALUES(8500, 'ICU');
-INSERT INTO rooms(cost,room_type) VALUES(8500, 'ICU');
-INSERT INTO rooms(cost,room_type) VALUES(8500, 'ICU');
-INSERT INTO rooms(cost,room_type) VALUES(8500, 'ICU');
+INSERT INTO rooms(cost,room_type) VALUES(8500, 'Ward');
+INSERT INTO rooms(cost,room_type) VALUES(8500, 'Ward');
 INSERT INTO rooms(cost,room_type) VALUES(8500, 'ICU');
 
 -- inserting into treats database --
@@ -98,6 +98,28 @@ INSERT INTO room_incharge values (1,1,2),(2,2,1),(3,3,2),(4,4,1),(5,5,2),(6,6,1)
 -- assign rooms to patients
 INSERT INTO room_assigned VALUES (1, 1),(2, 2),(3, 3),(4, 4),(5, 5),(6, 6),(7, 7),(8, 8),(9, 9),(10, 10),(11, 11),(12, 12),
                                  (13, 13),(14, 14),(15, 15),(16, 16),(17, 17),(18, 18),(19, 19),(20,20);
+
+-- updates first 20 rooms as occupied
+UPDATE rooms SET status='occ' WHERE room_no=1;
+UPDATE rooms SET status='occ' WHERE room_no=2;
+UPDATE rooms SET status='occ' WHERE room_no=3;
+UPDATE rooms SET status='occ' WHERE room_no=4;
+UPDATE rooms SET status='occ' WHERE room_no=5;
+UPDATE rooms SET status='occ' WHERE room_no=6;
+UPDATE rooms SET status='occ' WHERE room_no=7;
+UPDATE rooms SET status='occ' WHERE room_no=8;
+UPDATE rooms SET status='occ' WHERE room_no=9;
+UPDATE rooms SET status='occ' WHERE room_no=10;
+UPDATE rooms SET status='occ' WHERE room_no=11;
+UPDATE rooms SET status='occ' WHERE room_no=12;
+UPDATE rooms SET status='occ' WHERE room_no=13;
+UPDATE rooms SET status='occ' WHERE room_no=14;
+UPDATE rooms SET status='occ' WHERE room_no=15;
+UPDATE rooms SET status='occ' WHERE room_no=16;
+UPDATE rooms SET status='occ' WHERE room_no=17;
+UPDATE rooms SET status='occ' WHERE room_no=18;
+UPDATE rooms SET status='occ' WHERE room_no=19;
+UPDATE rooms SET status='occ' WHERE room_no=20;
 
 -- insert medicines
 insert into medicine_inventory(med_name,cost,quantity) values ('aaaaa',10,100);

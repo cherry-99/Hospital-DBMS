@@ -438,7 +438,6 @@ if(isset($_POST["update_pat_doc"]))
                     $query="DROP VIEW nurse_rooms";
                     $result=pg_query($db,$query);
                 ?>
-
             </div>
             <div id="house_keep" class="tab-pane fade">
                 <h3>Housekeeping</h3>
@@ -453,6 +452,31 @@ if(isset($_POST["update_pat_doc"]))
                     </div>
                     <button type="submit" name="update_hk" class="btn btn-default" value="submit">Submit</button>
                 </form>
+                <?php 
+                    $host = "host = localhost";
+                    $port = "port = 5432";
+                    $dbname = "dbname = test";
+                    $credentials = "user = postgres password=15739";
+                    $db = pg_connect("$host $port $dbname $credentials");
+                    $query="CREATE VIEW nurse_rooms AS SELECT room_incharge.room_no,room_incharge.h_id,hospital_employee.employee_name FROM room_incharge LEFT OUTER JOIN housekeeping ON room_incharge.h_id=housekeeping.h_id LEFT OUTER JOIN hospital_employee ON housekeeping.emp_id=hospital_employee.emp_id ORDER BY room_incharge.h_id";
+                    $result = pg_query($db,$query);
+                    $query = "SELECT * FROM nurse_rooms";
+                    $result = pg_query($db,$query);
+                    echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+                    echo "<thead><tr><th>ROOM NO</th><th>HOUSEKEEPING ID</th> <th>NAME</th> </tr></thead><tbody>";
+                    // loop through results of database query, displaying them in the table
+                    while($row = pg_fetch_array( $result )) 
+                    {
+                            // echo out the contents of each row into a table
+                            echo "<tr>";
+                            echo '<td>' . $row['room_no'] . '</td>';
+                            echo '<td>' . $row['h_id'] . '</td>';
+                            echo '<td>' . $row['employee_name'] . '</td>'.'</tr>';
+                    }
+                    echo "</tbody></table>";
+                    $query="DROP VIEW nurse_rooms";
+                    $result=pg_query($db,$query);
+                ?>
             </div>
             <div id="patdoc" class="tab-pane fade">
                 <h3>Pat-Doc</h3>
@@ -467,6 +491,31 @@ if(isset($_POST["update_pat_doc"]))
                     </div>
                     <button type="submit" name="update_pat_doc" class="btn btn-default" value="submit">Submit</button>
                 </form>
+                <?php 
+                    $host = "host = localhost";
+                    $port = "port = 5432";
+                    $dbname = "dbname = test";
+                    $credentials = "user = postgres password=15739";
+                    $db = pg_connect("$host $port $dbname $credentials");
+                    $query="CREATE VIEW nurse_rooms AS SELECT patient.pat_name,patient.pat_id,treats.doc_id FROM treats LEFT OUTER JOIN patient ON treats.pat_id=patient.pat_id";
+                    $result = pg_query($db,$query);
+                    $query = "SELECT * FROM nurse_rooms";
+                    $result = pg_query($db,$query);
+                    echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+                    echo "<thead><tr><th>Patient Name</th><th>Patient ID</th><th>Doctor ID</th> </tr></thead><tbody>";
+                    // loop through results of database query, displaying them in the table
+                    while($row = pg_fetch_array( $result )) 
+                    {
+                            // echo out the contents of each row into a table
+                            echo "<tr>";
+                            echo '<td>' . $row['pat_name'] . '</td>';
+                            echo '<td>' . $row['pat_id'] . '</td>';
+                            echo '<td>' . $row['doc_id'] . '</td>'.'</tr>';
+                    }
+                    echo "</tbody></table>";
+                    $query="DROP VIEW nurse_rooms";
+                    $result=pg_query($db,$query);
+                ?>
             </div>
         </div>
     </div>
