@@ -26,20 +26,22 @@ if(isset($_POST["update_password"]))
     $rep_psw=$_POST["rep_new_psw"];
     if($rep_psw!=$new_psw)
     {
-        array_push($errors1,"REPEAT NEW PASSWORD MUST MATCH NEW PASSWORD");
+        echo '<script language="javascript">';
+        echo 'alert("Repeat Password does not match New password")';
+        echo '</script>';
+        array_push($errors1,"1");
     }
     $query="SELECT * FROM PATIENT_LOGIN WHERE PAT_ID=$pat_id";
     $result=pg_query($db,$query);
     $pword=pg_fetch_result($result,0,1);
     if($curr_psw!=$pword)
     {
-        array_push($errors1,"Current Password Does Not Match");
+        echo '<script language="javascript">';
+        echo 'alert("Current Password does not match")';
+        echo '</script>';
+        array_push($errors1,"0");
     }
-    if(count($errors1)>0)
-    {
-        echo '<script type="text/javascript">','patient_forms(3);','</script>';
-    }
-    else
+    if(count($errors1)<=0)
     {
         $query = "UPDATE patient_login SET pasword='".$new_psw."' WHERE pat_id=$pat_id";
         $result = pg_query($db,$query);
@@ -57,7 +59,13 @@ $ph_no = $answer[4];
 $admit_date = $answer[5];
 $diagnosis = $answer[6];
 $discharge_date = $answer[7];
-$address = $answer[8];
+$query = "SELECT house_no , street, area, city FROM pat_address WHERE pat_id = $pat_id";
+$result = pg_query($db,$query);
+$answer = pg_fetch_array($result);
+$house_no = $answer[0];
+$street = $answer[1];
+$area = $answer[2];
+$city = $answer[3];
 
 ?>
 

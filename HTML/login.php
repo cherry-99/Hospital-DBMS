@@ -34,6 +34,7 @@ if(isset($_POST["submit_emp"]))
                 $nurse_id = pg_fetch_result($result,0,0);
                 $cookiename = "nurse_id";
                 $cookievalue = $nurse_id;
+                setcookie($cookiename, $cookievalue, time() + (86400), "/");
                 header("location: nurse.php");
             }
             if($emp_type=="DOCTOR")
@@ -43,18 +44,35 @@ if(isset($_POST["submit_emp"]))
                 $doc_id = pg_fetch_result($result,0,0);
                 $cookiename = "doc_id";
                 $cookievalue = $doc_id;
+                setcookie($cookiename, $cookievalue, time() + (86400), "/");
                 header("location: doctor.php");
+            }
+            if($emp_type=="RECEPTIONIST")
+            {
+                $query = "SELECT r_id FROM receptionist WHERE EMP_ID='".$uname."'";
+                $result = pg_query($db,$query);
+                $r_id = pg_fetch_result($result,0,0);
+                $cookiename = "r_id";
+                $cookievalue = $r_id;
+                setcookie($cookiename, $cookievalue, time() + (86400), "/");
+                header("location: rec_insert.php");
             }
             
         }
         else
         {
-            array_push($errors,"Password does not match Username");
+            echo '<script language="javascript">';
+            echo 'alert("Username and Password do not match")';
+            echo '</script>';
+            array_push($errors,"0");
         }
     }
     else
     {
-        array_push($errors,"Username not found");
+        echo '<script language="javascript">';
+        echo 'alert("Username not found")';
+        echo '</script>';
+        array_push($errors,"1");
     }
 }
 
@@ -77,12 +95,18 @@ if(isset($_POST["submit_pat"]))
         }
         else
         {
-            array_push($errors,"Password does not match Username");
+            echo '<script language="javascript">';
+            echo 'alert("Username and Password do not match")';
+            echo '</script>';
+            array_push($errors,"0");
         }
     }
     else
     {
-        array_push($errors,"Username not found");
+        echo '<script language="javascript">';
+        echo 'alert("Username not found")';
+        echo '</script>';
+        array_push($errors,"1");
     }
 }
 ?>
@@ -90,14 +114,6 @@ if(isset($_POST["submit_pat"]))
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <?php  if (count($errors) > 0) : ?>
-        <div class="error">
-  	        <?php foreach ($errors as $error) : ?>
-  	            <p><?php echo $error ?></p>
-  	        <?php endforeach ?>
-        </div>
-    <?php  endif ?>
 
     <title>Hospital Database</title>
     <meta charset="utf-8">
@@ -128,9 +144,6 @@ if(isset($_POST["submit_pat"]))
                     <div class="form-group">
                         <input type="submit" class="btnSubmit" name="submit_emp" value="Login" />
                     </div>
-                    <!-- <div class="form-group">
-                        <a href="#" class="ForgetPwd">Forget Password?</a>
-                    </div> -->
                 </form>
             </div>
             <div class="col-md-6 login-form-2">

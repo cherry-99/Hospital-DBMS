@@ -6,71 +6,13 @@ $credentials = "user = postgres password=15739";
 
 $db = pg_connect("$host $port $dbname $credentials");
 $errors1 = array();
-
-if(isset($_POST["confirm_update_emp"]))
-{
-    $emp_id=$_POST["emp_id"];
-    $query = "SELECT * FROM hospital_employee WHERE emp_id='".$emp_id."';";
-    $result = pg_query($db,$query);
-    $ans = pg_fetch_assoc($result);
-    if($ans)
-    {
-        $cookiename = "u_eid";
-        $cookievalue = $emp_id;
-        setcookie($cookiename, $cookievalue, time() + (86400), "/");
-        header("location: rec_update_emp.php");
-    }
-    else
-    {
-        echo '<script language="javascript">';
-        echo 'alert("EMPLOYEE Not Found")';
-        echo '</script>';
-    }
-    
-}
-
-if(isset($_POST["confirm_update_pat"]))
-{
-    $emp_id=$_POST["pat_id"];
-    $query = "SELECT * FROM patient WHERE pat_id='".$emp_id."';";
-    $result = pg_query($db,$query);
-    $ans = pg_fetch_assoc($result);
-    if($ans)
-    {
-        $cookiename = "u_pid";
-        $cookievalue = $emp_id;
-        setcookie($cookiename, $cookievalue, time() + (86400), "/");
-        header("location: rec_update_pat.php");
-    }
-    else
-    {
-        echo '<script language="javascript">';
-        echo 'alert("PATIENT Not Found")';
-        echo '</script>';
-    } 
-}
-
-if(isset($_POST["confirm_update_med_inv"]))
-{
-    $emp_id=$_POST["med_id"];
-    $query = "SELECT * FROM MEDICINE_INVENTORY WHERE med_id='".$emp_id."';";
-    $result = pg_query($db,$query);
-    $ans = pg_fetch_assoc($result);
-    if($ans)
-    {
-        $cookiename = "u_mid";
-        $cookievalue = $emp_id;
-        setcookie($cookiename, $cookievalue, time() + (86400), "/");
-        header("location: rec_update_inv.php");
-    }
-    else
-    {
-        echo '<script language="javascript">';
-        echo 'alert("MEDICINE Not Found")';
-        echo '</script>';
-    }
-}
-
+$med_id = $_COOKIE["u_mid"];
+$query = "SELECT med_name,cost,quantity FROM MEDICINE_INVENTORY WHERE med_id=$med_id";
+$result = pg_query($db,$query);
+$answer = pg_fetch_array($result);
+$med_name=$answer[0];
+$cost=$answer[1];
+$quantity=$answer[2];
 
 if(isset($_POST["update_emp"]))
 {
@@ -116,9 +58,10 @@ if(isset($_POST["update_med_inv"]))
     $cost=$_POST["cost"];
     $quantity=$_POST["quantity"];
     $med_id=$_COOKIE["u_mid"];
-    $query = "UPDATE medicine_inventory SET med_name='".$name."' cost='".$cost."' quantity='".$quantity."' WHERE med_id=$u_mid"; 
+    $query = "UPDATE medicine_inventory SET med_name='".$name."' ,cost='".$cost."', quantity='".$quantity."' WHERE med_id=$med_id"; 
     $result = pg_query($db,$query);
-    unset($_COOKIE['u_pid']);
+    unset($_COOKIE['u_mid']);
+    header("location: rec_update.php");
 }
 
 
@@ -275,34 +218,57 @@ if(isset($_POST["update_pat_doc"]))
         </div>
     </nav>
 
-    <?php  if (count($errors1) > 0) : ?>
-    <div class="error">
-        <?php foreach ($errors1 as $error) : ?>
-        <p><?php echo $error ?></p>
-        <?php endforeach ?>
-    </div>
-    <?php  endif ?>
     <div class="container">
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#emp">Employee</a></li>
+            <li><a data-toggle="tab" href="#emp">Employee</a></li>
             <li><a data-toggle="tab" href="#pat">Patient</a></li>
-            <li><a data-toggle="tab" href="#med_inv">Medicine Inventory</a></li>
+            <li class="active"><a data-toggle="tab" href="#med_inv">Medicine Inventory</a></li>
             <li><a data-toggle="tab" href="#nur">Nurse</a></li>
             <li><a data-toggle="tab" href="#house_keep">Housekeeping</a></li>
             <li><a data-toggle="tab" href="#patdoc">Pat-Doc</a></li>
         </ul>
         <div class="tab-content">
-            <div id="emp" class="tab-pane fade in active">
+            <div id="emp" class="tab-pane fade">
                 <h3>Employee</h3>
-                
                 <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
                     <div class="form-group-sm">
-                        <label for="emp_id">Employee ID:</label>
-                        <input type="number" class="form-control" id="emp_id" name="emp_id" required>
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
                     </div>
-                    <button type="submit" name="confirm_update_emp" class="btn btn-default" value="submit">Submit</button>
+                    <div class="form-group-sm">
+                        <h5><b>Gender:</b></h5>
+                        <input type="text" class="form-control" id="gender" name="gender" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="age">Age:</label>
+                        <input type="number" class="form-control" id="age" name="age" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="contact_no">Contact Number:</label>
+                        <input type="tel" class="form-control" id="contact_no" name="contact_no" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="house_no">House No:</label>
+                        <input type="number" class="form-control" id="house_no" name="house_no" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="street">Street:</label>
+                        <input type="text" class="form-control" id="street" name="street" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="area">Area:</label>
+                        <input type="text" class="form-control" id="area" name="area" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="city">City:</label>
+                        <input type="text" class="form-control" id="city" name="city" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="salary">Salary:</label>
+                        <input type="number" class="form-control" id="salary" name="salary" required>
+                    </div>
+                    <button type="submit" name="update_emp" class="btn btn-default" value="submit">Submit</button>
                 </form>
-
                 <?php 
                     $host = "host = localhost";
                     $port = "port = 5432";
@@ -331,15 +297,45 @@ if(isset($_POST["update_pat_doc"]))
             </div>
             <div id="pat" class="tab-pane fade">
                 <h3>Patient</h3>
-                
                 <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
                     <div class="form-group-sm">
-                        <label for="pat_id">Patient ID:</label>
-                        <input type="number" class="form-control" id="pat_id" name="pat_id" required>
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
                     </div>
-                    <button type="submit" name="confirm_update_pat" class="btn btn-default" value="submit">Submit</button>
+                    <div class="form-group-sm">
+                        <h5><b>Gender:</b></h5>
+                        <input type="text" class="form-control" id="gender" name="gender" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="dob">Date of Birth:</label>
+                        <input type="date" class="form-control" id="dob" name="dob" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="contact_no">Contact Number:</label>
+                        <input type="tel" class="form-control" id="contact_no" name="contact_no" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="house_no">House No:</label>
+                        <input type="number" class="form-control" id="house_no" name="house_no" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="street">Street:</label>
+                        <input type="text" class="form-control" id="street" name="street" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="area">Area:</label>
+                        <input type="text" class="form-control" id="area" name="area" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="city">City:</label>
+                        <input type="text" class="form-control" id="city" name="city" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="admit_date">Admit Date:</label>
+                        <input type="date" class="form-control" id="admit_date" name="admit_date" required>
+                    </div>
+                    <button type="submit" name="update_pat" class="btn btn-default" value="submit">Submit</button>
                 </form>
-
                 <?php 
                     $host = "host = localhost";
                     $port = "port = 5432";
@@ -366,17 +362,23 @@ if(isset($_POST["update_pat_doc"]))
                     echo "</tbody></table>";
                 ?>
             </div>
-            <div id="med_inv" class="tab-pane fade">
+            <div id="med_inv" class="tab-pane fade in active">
                 <h3>Medicine Inventory</h3>
-                
-                <form class="form" action="/Hospital-DBMS/HTML/rec_update.php" method="POST">
+                <form class="form" action="/Hospital-DBMS/HTML/rec_update_inv.php" method="POST">
                     <div class="form-group-sm">
-                        <label for="med_id">Medicine ID:</label>
-                        <input type="number" class="form-control" id="med_id" name="med_id" required>
+                        <label for="name">Medicine Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" value="<?php echo $med_name; ?>" required>
                     </div>
-                    <button type="submit" name="confirm_update_med_inv" class="btn btn-default" value="submit">Submit</button>
+                    <div class="form-group-sm">
+                        <label for="cost">Cost:</label>
+                        <input type="number" class="form-control" id="cost" name="cost" value="<?php echo $cost; ?>" required>
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" value="<?php echo $quantity; ?>" required>
+                    </div>
+                    <button type="submit" name="update_med_inv" class="btn btn-default" value="submit">Submit</button>
                 </form>
-
                 <?php 
                     $host = "host = localhost";
                     $port = "port = 5432";
@@ -413,31 +415,6 @@ if(isset($_POST["update_pat_doc"]))
                     </div>
                     <button type="submit" name="update_nur" class="btn btn-default" value="submit">Submit</button>
                 </form>
-                <?php 
-                    $host = "host = localhost";
-                    $port = "port = 5432";
-                    $dbname = "dbname = test";
-                    $credentials = "user = postgres password=15739";
-                    $db = pg_connect("$host $port $dbname $credentials");
-                    $query="CREATE VIEW nurse_rooms AS SELECT room_incharge.room_no,room_incharge.nurse_id,hospital_employee.employee_name FROM room_incharge LEFT OUTER JOIN nurse ON room_incharge.nurse_id=nurse.nurse_id LEFT OUTER JOIN hospital_employee ON nurse.emp_id=hospital_employee.emp_id ORDER BY room_incharge.nurse_id";
-                    $result = pg_query($db,$query);
-                    $query = "SELECT * FROM nurse_rooms";
-                    $result = pg_query($db,$query);
-                    echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
-                    echo "<thead><tr><th>ROOM NO</th><th>NURSE ID</th> <th>NAME</th> </tr></thead><tbody>";
-                    // loop through results of database query, displaying them in the table
-                    while($row = pg_fetch_array( $result )) 
-                    {
-                            // echo out the contents of each row into a table
-                            echo "<tr>";
-                            echo '<td>' . $row['room_no'] . '</td>';
-                            echo '<td>' . $row['nurse_id'] . '</td>';
-                            echo '<td>' . $row['employee_name'] . '</td>'.'</tr>';
-                    }
-                    echo "</tbody></table>";
-                    $query="DROP VIEW nurse_rooms";
-                    $result=pg_query($db,$query);
-                ?>
             </div>
             <div id="house_keep" class="tab-pane fade">
                 <h3>Housekeeping</h3>
@@ -452,31 +429,6 @@ if(isset($_POST["update_pat_doc"]))
                     </div>
                     <button type="submit" name="update_hk" class="btn btn-default" value="submit">Submit</button>
                 </form>
-                <?php 
-                    $host = "host = localhost";
-                    $port = "port = 5432";
-                    $dbname = "dbname = test";
-                    $credentials = "user = postgres password=15739";
-                    $db = pg_connect("$host $port $dbname $credentials");
-                    $query="CREATE VIEW nurse_rooms AS SELECT room_incharge.room_no,room_incharge.h_id,hospital_employee.employee_name FROM room_incharge LEFT OUTER JOIN housekeeping ON room_incharge.h_id=housekeeping.h_id LEFT OUTER JOIN hospital_employee ON housekeeping.emp_id=hospital_employee.emp_id ORDER BY room_incharge.h_id";
-                    $result = pg_query($db,$query);
-                    $query = "SELECT * FROM nurse_rooms";
-                    $result = pg_query($db,$query);
-                    echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
-                    echo "<thead><tr><th>ROOM NO</th><th>HOUSEKEEPING ID</th> <th>NAME</th> </tr></thead><tbody>";
-                    // loop through results of database query, displaying them in the table
-                    while($row = pg_fetch_array( $result )) 
-                    {
-                            // echo out the contents of each row into a table
-                            echo "<tr>";
-                            echo '<td>' . $row['room_no'] . '</td>';
-                            echo '<td>' . $row['h_id'] . '</td>';
-                            echo '<td>' . $row['employee_name'] . '</td>'.'</tr>';
-                    }
-                    echo "</tbody></table>";
-                    $query="DROP VIEW nurse_rooms";
-                    $result=pg_query($db,$query);
-                ?>
             </div>
             <div id="patdoc" class="tab-pane fade">
                 <h3>Pat-Doc</h3>
@@ -491,31 +443,6 @@ if(isset($_POST["update_pat_doc"]))
                     </div>
                     <button type="submit" name="update_pat_doc" class="btn btn-default" value="submit">Submit</button>
                 </form>
-                <?php 
-                    $host = "host = localhost";
-                    $port = "port = 5432";
-                    $dbname = "dbname = test";
-                    $credentials = "user = postgres password=15739";
-                    $db = pg_connect("$host $port $dbname $credentials");
-                    $query="CREATE VIEW nurse_rooms AS SELECT patient.pat_name,patient.pat_id,treats.doc_id FROM treats LEFT OUTER JOIN patient ON treats.pat_id=patient.pat_id";
-                    $result = pg_query($db,$query);
-                    $query = "SELECT * FROM nurse_rooms";
-                    $result = pg_query($db,$query);
-                    echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
-                    echo "<thead><tr><th>Patient Name</th><th>Patient ID</th><th>Doctor ID</th> </tr></thead><tbody>";
-                    // loop through results of database query, displaying them in the table
-                    while($row = pg_fetch_array( $result )) 
-                    {
-                            // echo out the contents of each row into a table
-                            echo "<tr>";
-                            echo '<td>' . $row['pat_name'] . '</td>';
-                            echo '<td>' . $row['pat_id'] . '</td>';
-                            echo '<td>' . $row['doc_id'] . '</td>'.'</tr>';
-                    }
-                    echo "</tbody></table>";
-                    $query="DROP VIEW nurse_rooms";
-                    $result=pg_query($db,$query);
-                ?>
             </div>
         </div>
     </div>
